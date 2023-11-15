@@ -1,2 +1,4 @@
-package stickhero;public class ScoreTracker {
+package stickhero;
+
+public class ScoreTracker {
 }

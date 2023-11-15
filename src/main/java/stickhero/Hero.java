@@ -1,4 +1,8 @@
 package stickhero;
 
-public class Hero {
+import javafx.scene.image.ImageView;
+import javafx.scene.shape.Rectangle;
+
+public class Hero extends Rectangle {
+    private ImageView skin;
 }
