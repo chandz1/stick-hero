@@ -1,4 +1,6 @@
 package stickhero;
 
-public class ScoreTracker {
+import java.io.Serializable;
+
+public class ScoreTracker implements Serializable {
 }
