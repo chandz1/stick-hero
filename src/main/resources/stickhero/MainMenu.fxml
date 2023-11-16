@@ -19,15 +19,17 @@
     </Button>
     <TextFlow prefHeight="200.0" prefWidth="200.0" textAlignment="CENTER">
         <StackPane.margin>
-            <Insets/>
+            <Insets />
         </StackPane.margin>
         <padding>
-            <Insets top="200.0"/>
+            <Insets top="150.0" />
         </padding>
-        <Label alignment="CENTER" text="Stick&#10;Hero" textAlignment="CENTER">
-           <font>
-               <Font size="40.0"/>
-           </font>
-        </Label>
+      <children>
+         <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="146.0" text="Stick&#10;Hero" textAlignment="CENTER" textFill="WHITE">
+            <font>
+               <Font name="System Bold" size="60.0" />
+            </font>
+         </Label>
+      </children>
     </TextFlow>
 </StackPane>
