@@ -48,3 +48,26 @@ release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
+
+### Logs
+*.log
+logs/
+*.lck
+
+### FXGL
+saves/
+profiles/
+system/
+editor_json/
+*.json
+
+### FXGL
+testprofiles/
+
+### Savefiles
+*.sav
+*.prefs
+
+### CHANGELOGS
+CHANGELOG_RAW.md
+CHANGELOG.md
