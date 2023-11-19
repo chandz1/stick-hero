@@ -23,12 +23,6 @@ public class Stick extends Rectangle {
     public void scaleStick() {
     }
 
-    public void getStickWidth() {
-    }
-
-    public void getStickHeight() {
-    }
-
     public void getStickX() {
     }
 
