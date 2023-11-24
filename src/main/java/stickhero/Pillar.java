@@ -1,9 +1,10 @@
 package stickhero;
 
-import javafx.scene.shape.Rectangle;
+import com.almasb.fxgl.dsl.FXGL;
 
-import java.io.Serializable;
-
-public class Pillar extends Rectangle implements Serializable {
+public class Pillar {
+    public Pillar() {
+        player = FXGL.spawn("tower", FXGL.getAppWidth() / 4, FXGL.getAppHeight() - 500);
+    }
 
 }
