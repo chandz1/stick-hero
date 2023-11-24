@@ -5,7 +5,9 @@ import javafx.animation.ScaleTransition;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class Stick extends Rectangle {
+import java.io.Serializable;
+
+public class Stick extends Rectangle implements Serializable {
     private final RotateTransition rotateAnimator;
     private final ScaleTransition scaleAnimator;
 

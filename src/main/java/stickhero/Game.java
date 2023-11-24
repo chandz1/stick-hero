@@ -15,9 +15,9 @@ public class Game extends Application implements Serializable {
 
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Game.class.getResource("Button.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Game.class.getResource("MainMenu.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1920, 1080);
-        stage.setTitle("Hello!");
+        stage.setTitle("Stick Hero");
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();

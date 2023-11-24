@@ -5,6 +5,19 @@ import java.io.Serializable;
 public class Score implements Serializable {
     private int highScore;
     private int currentScore;
+
+    public Score(int highScore, int currentScore, int totalCherries) {
+        this.highScore = highScore;
+        this.currentScore = currentScore;
+        this.totalCherries = totalCherries;
+    }
+
+    public Score() {
+        this.highScore = 0;
+        this.currentScore = 0;
+        this.totalCherries = 0;
+    }
+
     private int totalCherries;
 
     public int getCurrentScore() {
