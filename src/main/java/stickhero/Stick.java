@@ -18,12 +18,9 @@ public class Stick extends Rectangle implements Serializable {
         super(width, height, new Color(0, 0, 0, 1));
         super.setX(x);
         super.setY(y);
-        this.rotateAnimator = new RotateTransition();
+        this.rotateAnimator = new RotateTransition(Duration.millis(1000), this);
         this.scaleAnimator = new ScaleTransition(Duration.millis(1000), this);
         this.translateAnimator = new TranslateTransition(Duration.millis(1000), this);
-    }
-
-    public void rotateStick() {
     }
 
     public void scaleStick() {
@@ -38,6 +35,17 @@ public class Stick extends Rectangle implements Serializable {
     }
 
     public void getStickY() {
+    }
+
+    public void stopStick() {
+        scaleAnimator.stop();
+        translateAnimator.stop();
+        rotateStick();
+    }
+
+    private void rotateStick() {
+        rotateAnimator.setByAngle(90);
+        rotateAnimator.play();
     }
 
 }
