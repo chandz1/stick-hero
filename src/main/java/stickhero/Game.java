@@ -33,7 +33,7 @@ public class Game extends Application implements Serializable {
 
         Pane pane = (Pane) scene.lookup("#root");
         Pillar pillar = new Pillar( 200);
-        Stick stick = new Stick(5, 1, pillar.getWidth()-5, pane.getHeight() - pillar.getHeight()-1);
+        Stick stick = new Stick(5, 1, pillar.getWidth()-2.5, pane.getHeight() - pillar.getHeight());
 
         pane.getChildren().add(pillar);
         pane.getChildren().add(stick);

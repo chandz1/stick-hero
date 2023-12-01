@@ -60,7 +60,7 @@ public class Stick extends Rectangle implements Serializable {
         rotateAnimator.setByAngle(90);
         this.getTransforms().add(new Translate(0,-0.5));
         this.setTranslateX(0);
-        this.setTranslateY(-0.5);
+        this.setTranslateY(0);
         System.out.println(this.getTranslateX());
         rotateAnimator.play();
     }
