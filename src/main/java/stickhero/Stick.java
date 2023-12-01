@@ -34,8 +34,10 @@ public class Stick extends Rectangle implements Serializable {
         if (scaled) {
             return;
         }
-        scaleAnimator.setByY(400f);
-        translateAnimator.setByY(-200f);
+        // scale by screen size - height of pillar
+        float temp = 1000 - 300;
+        scaleAnimator.setByY(temp);
+        translateAnimator.setByY(-temp/2);
         scaleAnimator.play();
         translateAnimator.play();
     }

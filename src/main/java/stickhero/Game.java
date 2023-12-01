@@ -8,6 +8,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -32,14 +33,19 @@ public class Game extends Application implements Serializable {
         stage.show();
 
         Pane pane = (Pane) scene.lookup("#root");
-        Pillar pillar = new Pillar( 200);
+        Pillar pillar = new Pillar( 0, 200);
         Stick stick = new Stick(5, 1, pillar.getWidth()-2.5, pane.getHeight() - pillar.getHeight());
 
         pane.getChildren().add(pillar);
         pane.getChildren().add(stick);
 
+        Pillar pillar1 = new Pillar(800, 100);
+        pane.getChildren().add(pillar1);
+
         KeyCombination kc = new KeyCodeCombination(KeyCode.SPACE);
         scene.setOnKeyPressed(event -> {
+
+            pillar1.move();
             if (kc.match(event)) {
                 stick.scaleStick();
             }
