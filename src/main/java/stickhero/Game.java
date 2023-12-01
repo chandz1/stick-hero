@@ -33,13 +33,13 @@ public class Game extends Application implements Serializable {
         stage.show();
 
         Pane pane = (Pane) scene.lookup("#root");
-        Pillar pillar = new Pillar( 0, 200);
+        Pillar pillar = new Pillar(true);
         Stick stick = new Stick(5, 1, pillar.getWidth()-2.5, pane.getHeight() - pillar.getHeight());
 
         pane.getChildren().add(pillar);
         pane.getChildren().add(stick);
 
-        Pillar pillar1 = new Pillar(800, 100);
+        Pillar pillar1 = new Pillar(false);
         pane.getChildren().add(pillar1);
 
         KeyCombination kc = new KeyCodeCombination(KeyCode.SPACE);

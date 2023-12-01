@@ -4,6 +4,7 @@ import javafx.animation.TranslateTransition;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
+import java.util.Random;
 
 import java.io.Serializable;
 
@@ -15,6 +16,26 @@ public class Pillar extends Rectangle implements Serializable {
         super.setFill(new Color(0, 0, 0, 1));
     }
     // Didn't create getters and setters since they are inherited from Rectangle
+    public Pillar(boolean initialPillar) {
+        this(pillarGenX(initialPillar), pillarGenWidth(initialPillar));
+    }
+
+    public static int pillarGenX(boolean initialPillar) {
+        if (initialPillar) {
+            return 0;
+        } else {
+            return 600;
+        }
+    }
+
+    public static int pillarGenWidth(boolean initialPillar) {
+        if (initialPillar) {
+            return 200;
+        } else {
+            Random rand = new Random();
+            return rand.nextInt(300) + 64;
+        }
+    }
 
     public void move() {
         TranslateTransition translateTransition = new TranslateTransition(Duration.millis(1000),this);
