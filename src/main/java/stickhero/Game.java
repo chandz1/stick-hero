@@ -35,6 +35,9 @@ public class Game extends Application implements Serializable {
         Stick stick = new Stick(20, 1, pane.getWidth()/2, pane.getHeight()/2);
         pane.getChildren().add(stick);
 
+        Pillar pillar = new Pillar(10, 200);
+        pane.getChildren().add(pillar);
+
         KeyCombination kc = new KeyCodeCombination(KeyCode.SPACE);
         scene.setOnKeyPressed(event -> {
             if (kc.match(event)) {
