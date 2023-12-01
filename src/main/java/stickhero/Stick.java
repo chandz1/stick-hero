@@ -6,10 +6,13 @@ import javafx.animation.TranslateTransition;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
+import javafx.scene.layout.Pane;
+import javafx.fxml.FXML;
 
 import java.io.Serializable;
 
 public class Stick extends Rectangle implements Serializable {
+
     private final RotateTransition rotateAnimator;
     private final ScaleTransition scaleAnimator;
     private final TranslateTransition translateAnimator;
