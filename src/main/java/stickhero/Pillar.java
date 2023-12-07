@@ -30,16 +30,16 @@ public class Pillar extends Rectangle implements Serializable {
 
     public static int pillarGenWidth(boolean initialPillar) {
         if (initialPillar) {
-            return 200;
+            return 150;
         } else {
             Random rand = new Random();
-            return rand.nextInt(300) + 64;
+            return rand.nextInt(280) + 20;
         }
     }
 
     public void move() {
-        TranslateTransition translateTransition = new TranslateTransition(Duration.millis(1000),this);
-        translateTransition.setByX(-500);
+        TranslateTransition translateTransition = new TranslateTransition(Duration.millis(250),this);
+        translateTransition.setByX(-350);
         translateTransition.play();
     }
 }

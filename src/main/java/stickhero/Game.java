@@ -1,15 +1,19 @@
 package stickhero;
 
+import javafx.animation.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -32,27 +36,47 @@ public class Game extends Application implements Serializable {
         stage.setResizable(false);
         stage.show();
 
+        Image image = new Image((Game.class.getResourceAsStream("cherry.png")));
+        ImageView imageView = new ImageView();
+        imageView.setImage(image);
         Pane pane = (Pane) scene.lookup("#root");
         Pillar pillar = new Pillar(true);
+        imageView.setX(30);
+        imageView.setY(pillar.getY() - image.getHeight());
         Stick stick = new Stick(5, 1, pillar.getWidth()-2.5, pane.getHeight() - pillar.getHeight());
 
         pane.getChildren().add(pillar);
         pane.getChildren().add(stick);
+        pane.getChildren().add(imageView);
 
         Pillar pillar1 = new Pillar(false);
         pane.getChildren().add(pillar1);
+        pillar1.move();
+
+        Timeline stickTransform = new Timeline();
+        Timeline rotate = new Timeline();
+        TranslateTransition translateTransition = new TranslateTransition(Duration.millis(2000),imageView);
 
         KeyCombination kc = new KeyCodeCombination(KeyCode.SPACE);
         scene.setOnKeyPressed(event -> {
 
-            pillar1.move();
             if (kc.match(event)) {
-                stick.scaleStick();
+                KeyValue scaleY = new KeyValue(stick.scaleYProperty(), 700);
+                KeyValue translateY = new KeyValue(stick.translateYProperty(), -700/2);
+                KeyFrame keyFrame = new KeyFrame(Duration.millis(1500), scaleY, translateY);
+                stickTransform.getKeyFrames().add(keyFrame);
+                stickTransform.play();
             }
         });
         scene.setOnKeyReleased(event -> {
             if (kc.match(event)) {
-                stick.stopStick();
+                stickTransform.stop();
+                stick.getTransforms().add(new Translate(0,-0.5));
+                stick.setTranslateY(0);
+                KeyValue rotateStick = new KeyValue(stick.rotateProperty(), 90, Interpolator.EASE_IN);
+                KeyFrame keyFrame = new KeyFrame(Duration.millis(500), rotateStick);
+                rotate.getKeyFrames().add(keyFrame);
+                rotate.play();
             }
         });
     }

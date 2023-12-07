@@ -14,7 +14,6 @@ import javafx.fxml.FXML;
 import java.io.Serializable;
 
 public class Stick extends Rectangle implements Serializable {
-
     private final RotateTransition rotateAnimator;
     private final ScaleTransition scaleAnimator;
     private final TranslateTransition translateAnimator;
@@ -25,9 +24,9 @@ public class Stick extends Rectangle implements Serializable {
         super.setX(x);
         super.setY(y);
         this.scaled = false;
-        this.rotateAnimator = new RotateTransition(Duration.millis(1000), this);
-        this.scaleAnimator = new ScaleTransition(Duration.millis(1000), this);
-        this.translateAnimator = new TranslateTransition(Duration.millis(1000), this);
+        this.rotateAnimator = new RotateTransition(Duration.millis(700), this);
+        this.scaleAnimator = new ScaleTransition(Duration.millis(1500), this);
+        this.translateAnimator = new TranslateTransition(Duration.millis(1500), this);
     }
 
     public void scaleStick() {
@@ -63,8 +62,6 @@ public class Stick extends Rectangle implements Serializable {
         this.getTransforms().add(new Translate(0,-0.5));
         this.setTranslateX(0);
         this.setTranslateY(0);
-        System.out.println(this.getTranslateX());
         rotateAnimator.play();
     }
-
 }
