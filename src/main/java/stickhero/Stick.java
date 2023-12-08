@@ -23,8 +23,8 @@ public class Stick extends Rectangle implements Serializable, Movable {
         this.setOpacity(0);
         this.scaled = false;
         this.rotateAnimator = new RotateTransition(Duration.millis(500), this);
-        this.scaleAnimator = new ScaleTransition(Duration.millis(1500), this);
-        this.translateAnimator = new TranslateTransition(Duration.millis(1500), this);
+        this.scaleAnimator = new ScaleTransition(Duration.millis(1000), this);
+        this.translateAnimator = new TranslateTransition(Duration.millis(1000), this);
         this.scaleStick = new ParallelTransition(scaleAnimator,translateAnimator);
     }
 
@@ -34,6 +34,7 @@ public class Stick extends Rectangle implements Serializable, Movable {
         }
         // scale by screen size - height of pillar
         float temp = 1000 - 300;
+        this.setOpacity(1);
         scaleAnimator.setByY(temp);
         translateAnimator.setByY(-temp/2);
         scaleStick.play();

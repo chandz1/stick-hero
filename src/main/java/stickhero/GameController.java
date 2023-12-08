@@ -1,22 +1,44 @@
 package stickhero;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class GameController {
-    @FXML
-    private Label playButton;
+    private BooleanProperty spacePressed = new SimpleBooleanProperty();
 
-    private StickController stickController = new StickController();
+    public void controlStick() {
+        Stick stick = Utils.getBasePillar().getStick();
 
-    @FXML
-    protected void onHelloButtonClick() {
-        playButton.setText("Welcome to JavaFX Application!");
-        stickController.controlStick();
+        getInput();
+
+        spacePressed.addListener(((observable, oldValue, newValue) -> {
+            if (newValue) {
+                stick.scaleStick();
+            } else {
+                stick.stopStick();
+            }
+        }));
+    }
+
+    private void getInput() {
+        Utils.getCurrentScene().setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.SPACE) {
+                spacePressed.set(true);
+            }
+        });
+
+        Utils.getCurrentScene().setOnKeyReleased(event -> {
+            if (event.getCode() == KeyCode.SPACE) {
+                spacePressed.set(false);
+            }
+        });
     }
 }

@@ -5,8 +5,6 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
@@ -17,7 +15,6 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.Objects;
 
 public class Game extends Application implements Serializable {
     public static void main(String[] args) {
