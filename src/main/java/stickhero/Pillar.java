@@ -73,7 +73,8 @@ public class Pillar extends Rectangle implements Serializable, Movable {
     public TranslateTransition bringToScreen(Pillar base) {
         Random rand = new Random();
 
-        double randomize = parentPane.getWidth() - this.getWidth() - 164;
+        // width of the pane subtracted by width of the pillar and the amount of size of basePillar and padding of 64 between pillar and screen
+        double randomize = parentPane.getWidth() - this.getWidth() - 228;
         double translate = rand.nextDouble(randomize) + this.getWidth() + 64;
         return this.move(-translate);
     }
