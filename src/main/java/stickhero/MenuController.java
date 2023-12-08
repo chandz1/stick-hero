@@ -43,8 +43,7 @@ public class MenuController {
         Pillar pillar1 = new Pillar(false);
         pillar1.bringToScreen(pillar).play();
 
-        GameController gameController = new GameController();
-        gameController.controlStick();
+
     }
 
     public void loadGame() {
