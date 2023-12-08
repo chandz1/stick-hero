@@ -1,6 +1,7 @@
 package stickhero;
 
 import javafx.animation.TranslateTransition;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
@@ -10,10 +11,13 @@ import java.io.Serializable;
 
 public class Pillar extends Rectangle implements Serializable {
     // Used arbitrary value for height temporarily will change later
+    private Pane parentPane;
 
     public Pillar(double x, double width) {
         super(x, 1000-300, width, 300);
         super.setFill(new Color(0, 0, 0, 1));
+        parentPane = Utils.getPane();
+        parentPane.getChildren().add(this);
     }
     // Didn't create getters and setters since they are inherited from Rectangle
     public Pillar(boolean initialPillar) {
@@ -37,9 +41,29 @@ public class Pillar extends Rectangle implements Serializable {
         }
     }
 
-    public void move() {
+    public double getCurrentX() {
+        return 600.0 + this.getTranslateX();
+    }
+
+    public TranslateTransition move(double x) {
         TranslateTransition translateTransition = new TranslateTransition(Duration.millis(250),this);
-        translateTransition.setByX(-350);
-        translateTransition.play();
+        translateTransition.setByX(x);
+        return translateTransition;
+    }
+
+    public TranslateTransition bringToScreen(Pillar base) {
+        Random rand = new Random();
+
+        double randomize = parentPane.getWidth() - base.getWidth() - this.getWidth() - 60;
+        double translate = rand.nextDouble(randomize) + this.getWidth() + 30;
+        return this.move(-translate);
+    }
+
+    public TranslateTransition removeFromScreen() {
+        return this.move(-(this.getWidth() + this.getX()));
+    }
+
+    public TranslateTransition moveToBase() {
+        return this.move(-this.getCurrentX() - this.getWidth() + 150);
     }
 }

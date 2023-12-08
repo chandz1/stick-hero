@@ -40,18 +40,17 @@ public class Game extends Application implements Serializable {
         ImageView imageView = new ImageView();
         imageView.setImage(image);
         Pane pane = (Pane) scene.lookup("#root");
+        Utils.setPane(pane);
         Pillar pillar = new Pillar(true);
         imageView.setX(30);
         imageView.setY(pillar.getY() - image.getHeight());
         Stick stick = new Stick(5, 1, pillar.getWidth()-2.5, pane.getHeight() - pillar.getHeight());
 
-        pane.getChildren().add(pillar);
         pane.getChildren().add(stick);
         pane.getChildren().add(imageView);
 
         Pillar pillar1 = new Pillar(false);
-        pane.getChildren().add(pillar1);
-        pillar1.move();
+        pillar1.bringToScreen(pillar).play();
 
         Timeline stickTransform = new Timeline();
         Timeline rotate = new Timeline();
@@ -61,8 +60,8 @@ public class Game extends Application implements Serializable {
         scene.setOnKeyPressed(event -> {
 
             if (kc.match(event)) {
-                KeyValue scaleY = new KeyValue(stick.scaleYProperty(), 700);
-                KeyValue translateY = new KeyValue(stick.translateYProperty(), -700/2);
+                KeyValue scaleY = new KeyValue(stick.scaleYProperty(), 1000);
+                KeyValue translateY = new KeyValue(stick.translateYProperty(), -1000/2);
                 KeyFrame keyFrame = new KeyFrame(Duration.millis(1500), scaleY, translateY);
                 stickTransform.getKeyFrames().add(keyFrame);
                 stickTransform.play();
@@ -76,8 +75,10 @@ public class Game extends Application implements Serializable {
                 KeyValue rotateStick = new KeyValue(stick.rotateProperty(), 90, Interpolator.EASE_IN);
                 KeyFrame keyFrame = new KeyFrame(Duration.millis(500), rotateStick);
                 rotate.getKeyFrames().add(keyFrame);
-                rotate.play();
+                SequentialTransition sequence = new SequentialTransition(rotate, pillar.removeFromScreen(), pillar1.moveToBase());
+                sequence.play();
             }
         });
+
     }
 }
