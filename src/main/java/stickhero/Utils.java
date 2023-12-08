@@ -7,6 +7,7 @@ public final class Utils {
     private static Pane currentPane;
     private static Scene currentScene;
     private static Pillar basePillar;
+    private static Pillar nextPillar;
     public static void setPane(Pane pane) {
         currentPane = pane;
     }
@@ -27,5 +28,13 @@ public final class Utils {
 
     public static Scene getCurrentScene() {
         return currentScene;
+    }
+
+    public static void setNextPillar(Pillar nextPillar) {
+        Utils.nextPillar = nextPillar;
+    }
+
+    public static Pillar getNextPillar() {
+        return nextPillar;
     }
 }

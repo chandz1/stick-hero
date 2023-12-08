@@ -26,6 +26,8 @@ public class Pillar extends Rectangle implements Serializable, Movable {
         this(pillarGenX(initialPillar), pillarGenWidth(initialPillar));
         if (initialPillar) {
             Utils.setBasePillar(this);
+        } else {
+            Utils.setNextPillar(this);
         }
         this.stick = new Stick();
     }
