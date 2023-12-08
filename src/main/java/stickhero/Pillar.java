@@ -76,7 +76,23 @@ public class Pillar extends Rectangle implements Serializable, Movable, Boundabl
         if (this.bonusZone == null) {
             return new ParallelTransition(this.move(x));
         } else {
-            return new ParallelTransition(this.move(x), this.bonusZone.move(x));
+            if (this.cherry == null) {
+                return new ParallelTransition(this.move(x), this.bonusZone.move(x));
+            } else {
+                return new ParallelTransition(this.move(x), this.bonusZone.move(x), this.cherry.move(x));
+            }
+        }
+    }
+
+    public ParallelTransition moveWithBonus(double x, boolean y) {
+        if (y){
+            if (this.bonusZone == null) {
+                return new ParallelTransition(this.move(x));
+            } else {
+                return new ParallelTransition(this.move(x), this.bonusZone.move(x));
+            }
+        } else {
+            return moveWithBonus(x);
         }
     }
 
@@ -90,8 +106,8 @@ public class Pillar extends Rectangle implements Serializable, Movable, Boundabl
         if (cherry == null) {
             return this.moveWithBonus(-translate);
         } else {
-            double cherryTranslate = Utils.getRandomRange(600 - translate, 500);
-            return new ParallelTransition(this.moveWithBonus(-translate), this.cherry.move(-cherryTranslate));
+            double cherryTranslate = translate + this.cherry.getImageWidth() + rand.nextDouble(500 - translate - this.cherry.getImageWidth());
+            return new ParallelTransition(this.moveWithBonus(-translate, true), this.cherry.move(-cherryTranslate));
         }
     }
 
