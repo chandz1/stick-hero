@@ -69,10 +69,14 @@ public class Stick extends Rectangle implements Serializable, Movable {
         return translateTransition;
     }
 
-    public boolean isWithinBounds(Pillar bounds) {
+    public boolean isWithinBounds(double bound1, double bound2) {
         double stickDistance = 97.5 + this.getScaleY();
-        double boundsX1 = bounds.getCurrentX();
-        double boundsX2 = bounds.getWidth() + bounds.getCurrentX();
-        return boundsX1 < stickDistance && stickDistance < boundsX2;
+        return bound1 < stickDistance && stickDistance < bound2;
+    }
+
+    public <T extends Boundable> boolean isWithinBounds(T t) {
+        double boundsX1 = t.getCurrentX();
+        double boundsX2 = t.getWidth() + t.getCurrentX();
+        return isWithinBounds(boundsX1, boundsX2);
     }
 }

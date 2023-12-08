@@ -11,7 +11,7 @@ import java.util.Random;
 
 import java.io.Serializable;
 
-public class Pillar extends Rectangle implements Serializable, Movable {
+public class Pillar extends Rectangle implements Serializable, Movable, Boundable {
     // Used arbitrary value for height temporarily will change later
     private Pane parentPane;
     private Stick stick;
