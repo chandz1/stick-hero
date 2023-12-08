@@ -37,33 +37,28 @@ public class Game extends Application implements Serializable {
         stage.setResizable(false);
         stage.show();
 
-        Image image = new Image((Objects.requireNonNull(Game.class.getResourceAsStream("hero.png"))));
-        ImageView imageView = new ImageView();
-        imageView.setImage(image);
         Pane pane = (Pane) scene.lookup("#root");
         Utils.setPane(pane);
         Pillar pillar = new Pillar(true);
-        imageView.setX(pillar.getWidth()-image.getWidth()-10);
-        imageView.setY(pillar.getY() - image.getHeight());
-        Stick stick = new Stick(5, 1, pillar.getWidth()-2.5, pane.getHeight() - pillar.getHeight());
+        Utils.setBasePillar(pillar);
+        Stick stick = new Stick();
 
-        pane.getChildren().add(stick);
-        pane.getChildren().add(imageView);
+        Hero hero = new Hero();
 
         Pillar pillar1 = new Pillar(false);
         pillar1.bringToScreen(pillar).play();
 
         Timeline stickTransform = new Timeline();
         Timeline rotate = new Timeline();
-        TranslateTransition translateTransition = new TranslateTransition(Duration.millis(2000),imageView);
 
         KeyCombination kc = new KeyCodeCombination(KeyCode.SPACE);
         scene.setOnKeyPressed(event -> {
 
             if (kc.match(event)) {
-                KeyValue scaleY = new KeyValue(stick.scaleYProperty(), 1000);
-                KeyValue translateY = new KeyValue(stick.translateYProperty(), -1000/2);
-                KeyFrame keyFrame = new KeyFrame(Duration.millis(1500), scaleY, translateY);
+                stick.setOpacity(1);
+                KeyValue scaleY = new KeyValue(stick.scaleYProperty(), 700);
+                KeyValue translateY = new KeyValue(stick.translateYProperty(), -700/2);
+                KeyFrame keyFrame = new KeyFrame(Duration.millis(1000), scaleY, translateY);
                 stickTransform.getKeyFrames().add(keyFrame);
                 stickTransform.play();
             }
@@ -74,8 +69,8 @@ public class Game extends Application implements Serializable {
                 stick.getTransforms().add(new Translate(0,-0.5));
                 stick.setTranslateY(0);
                 KeyValue rotateStick = new KeyValue(stick.rotateProperty(), 90, Interpolator.EASE_IN);
-                KeyFrame keyFrame = new KeyFrame(Duration.millis(500), rotateStick);
-                rotate.getKeyFrames().add(keyFrame);
+                KeyFrame frame = new KeyFrame(Duration.millis(500), rotateStick);
+                rotate.getKeyFrames().add(frame);
                 ParallelTransition parallel = new ParallelTransition(pillar.removeFromScreen(), pillar1.moveToBase());
                 SequentialTransition sequence = new SequentialTransition(rotate, parallel);
                 sequence.play();
