@@ -15,6 +15,8 @@ public class Stick extends Rectangle implements Serializable, Movable {
     private final ParallelTransition scaleTranslateAnimator;
     private boolean scaled;
 
+
+
     public Stick() {
         super(5, 1, new Color(0, 0, 0, 1));
         super.setX(97.5);

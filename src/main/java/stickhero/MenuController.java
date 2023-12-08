@@ -1,13 +1,9 @@
 package stickhero;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -38,10 +34,12 @@ public class MenuController {
         Utils.setHero(hero);
 
         Pillar pillar1 = new Pillar(false);
-        pillar1.bringToScreen(pillar).play();
+        pillar1.bringToScreen().play();
 
         GameController gameController = new GameController();
         gameController.controlStick();
+
+
 
     }
 

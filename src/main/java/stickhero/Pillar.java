@@ -16,6 +16,7 @@ public class Pillar extends Rectangle implements Serializable, Movable {
     private Pane parentPane;
     private Stick stick;
     private Stick prevStick;
+    private BonusZone bonusZone;
 
     public Pillar(double x, double width) {
         super(x, 1000-300, width, 300);
@@ -30,6 +31,7 @@ public class Pillar extends Rectangle implements Serializable, Movable {
             Utils.setBasePillar(this);
         } else {
             Utils.setNextPillar(this);
+            this.bonusZone = new BonusZone((int) (this.getX() + this.getWidth()/2 - 6));
         }
         this.stick = new Stick();
     }
@@ -70,25 +72,33 @@ public class Pillar extends Rectangle implements Serializable, Movable {
         return translateTransition;
     }
 
-    public TranslateTransition bringToScreen(Pillar base) {
+    public ParallelTransition moveWithBonus(double x) {
+        if (this.bonusZone == null) {
+            return new ParallelTransition(this.move(x));
+        } else {
+            return new ParallelTransition(this.move(x), this.bonusZone.move(x));
+        }
+    }
+
+    public ParallelTransition bringToScreen() {
         Random rand = new Random();
 
         // width of the pane subtracted by width of the pillar and the amount of size of basePillar and padding of 64 between pillar and screen
         double randomize = parentPane.getWidth() - this.getWidth() - 228;
         double translate = rand.nextDouble(randomize) + this.getWidth() + 64;
-        return this.move(-translate);
+        return this.moveWithBonus(-translate);
     }
 
     public double screenTranslateValue() {
         return -(this.getCurrentX() + this.getWidth() - 100);
     }
 
-    public TranslateTransition removeFromScreen(Pillar newBase) {
-        return this.move(newBase.screenTranslateValue());
+    public ParallelTransition removeFromScreen(Pillar newBase) {
+        return this.moveWithBonus(newBase.screenTranslateValue());
     }
 
-    public TranslateTransition moveToBase() {
-        return this.move(this.screenTranslateValue());
+    public ParallelTransition moveToBase() {
+        return this.moveWithBonus(this.screenTranslateValue());
     }
 
     public TranslateTransition moveStick(Pillar newBase) {

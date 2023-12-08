@@ -6,13 +6,8 @@ import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.geometry.Pos;
-import javafx.scene.LightBase;
-import javafx.scene.control.ContentDisplay;
-import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 
 public class GameController {
@@ -30,7 +25,7 @@ public class GameController {
                 if (getStick().isWithinBounds(Utils.getNextPillar())) {
                     TranslateTransition moveHero = Utils.getHero().move(0);
                     ParallelTransition rebasePillar = Utils.getNextPillar().reBase();
-                    TranslateTransition newPillarToScreen  = new Pillar(false).bringToScreen(Utils.getBasePillar());
+                    ParallelTransition newPillarToScreen  = new Pillar(false).bringToScreen();
                     SequentialTransition sequence = new SequentialTransition(rotateStick, moveHero, rebasePillar, newPillarToScreen);
                     sequence.play();
                 } else {
