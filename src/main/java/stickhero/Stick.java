@@ -42,7 +42,7 @@ public class Stick extends Rectangle implements Serializable, Movable {
         scaleTranslateAnimator.play();
     }
 
-    public RotateTransition stopStick() {
+    public RotateTransition stopAndRotateStick() {
         if (scaled) {
             return null;
         }
