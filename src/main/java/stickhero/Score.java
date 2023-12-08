@@ -1,5 +1,7 @@
 package stickhero;
 
+import javafx.beans.value.ObservableValue;
+
 import java.io.Serializable;
 
 public class Score implements Serializable {
@@ -24,23 +26,26 @@ public class Score implements Serializable {
         return currentScore;
     }
 
-    public void incrementCurrentScore(int currentScore) {
-        this.currentScore += 1;
+    public void incrementCurrentScore(int increment) {
+        this.currentScore += increment;
+        if (this.currentScore > this.highScore) {
+            this.highScore = this.currentScore;
+        }
     }
 
     public int getHighScore() {
         return highScore;
     }
 
-    public void setHighScore(int highScore) {
-        this.highScore = highScore;
-    }
-
     public int getTotalCherries() {
         return totalCherries;
     }
 
-    public void setTotalCherries(int totalCherries) {
-        this.totalCherries = totalCherries;
+    public void incrementTotalCherries(int increment) {
+        this.totalCherries += increment;
+    }
+
+    public void decrementTotalCherries(int decrement) {
+        this.totalCherries -= decrement;
     }
 }

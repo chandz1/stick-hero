@@ -7,16 +7,21 @@ import javafx.animation.TranslateTransition;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 public class GameController {
+
+
     private final BooleanProperty spacePressed = new SimpleBooleanProperty();
     private EventHandler<KeyEvent> spacePressEvent;
     private EventHandler<KeyEvent> spaceReleaseEvent;
     private boolean transitionInProgress = false;
+
 
     public void controlStick() {
 
@@ -34,6 +39,11 @@ public class GameController {
                     RotateTransition rotateStick = stick.stopAndRotateStick();
                     if (stick.isWithinBounds(pillar)) {
                         continueGame(hero, pillar, rotateStick);
+                        if (stick.isWithinBounds(pillar.getBonusZone())) {
+                            hero.getScore().incrementCurrentScore(2);
+                        } else {
+                            hero.getScore().incrementCurrentScore(1);
+                        }
                     } else {
                         gameOver(hero, stick, pillar, rotateStick);
                     }

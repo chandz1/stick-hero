@@ -65,6 +65,10 @@ public class Pillar extends Rectangle implements Serializable, Movable, Boundabl
         return this.getX() + this.getTranslateX();
     }
 
+    public BonusZone getBonusZone() {
+        return bonusZone;
+    }
+
     @Override
     public TranslateTransition move(double x) {
         TranslateTransition translateTransition = new TranslateTransition(Duration.millis(300),this);
