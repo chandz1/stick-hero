@@ -16,6 +16,7 @@ public class GameController {
     private final BooleanProperty spacePressed = new SimpleBooleanProperty();
     private EventHandler<KeyEvent> spacePressEvent;
     private EventHandler<KeyEvent> spaceReleaseEvent;
+    private boolean transitionInProgress = false;
 
     public void controlStick() {
 
@@ -25,17 +26,21 @@ public class GameController {
             Stick stick = Utils.getBasePillar().getStick();
             Hero hero = Utils.getHero();
             Pillar pillar = Utils.getNextPillar();
-            if (newValue) {
-                stick.scaleStick();
-            } else {
-                RotateTransition rotateStick = stick.stopAndRotateStick();
-                if (stick.isWithinBounds(pillar)) {
-                    continueGame(hero, pillar, rotateStick);
+            if (!transitionInProgress) {
+                if (newValue) {
+                    stick.scaleStick();
                 } else {
-                    gameOver(hero, stick, pillar, rotateStick);
+                    transitionInProgress = true;
+                    RotateTransition rotateStick = stick.stopAndRotateStick();
+                    if (stick.isWithinBounds(pillar)) {
+                        continueGame(hero, pillar, rotateStick);
+                    } else {
+                        gameOver(hero, stick, pillar, rotateStick);
+                    }
                 }
             }
-        }));
+        }
+        ));
     }
 
     private void getInput() {
@@ -55,10 +60,14 @@ public class GameController {
     }
 
     private void continueGame(Hero hero, Pillar pillar, RotateTransition rotateStick) {
+
         TranslateTransition moveHero = hero.move(pillar.getCurrentX() + pillar.getWidth() - 100);
         ParallelTransition rebasePillar = pillar.reBase();
         ParallelTransition newPillarToScreen  = new Pillar(false).bringToScreen();
         SequentialTransition sequence = new SequentialTransition(rotateStick, moveHero, rebasePillar, newPillarToScreen);
+        sequence.setOnFinished(event -> {
+            transitionInProgress = false;
+        });
         sequence.play();
     }
 

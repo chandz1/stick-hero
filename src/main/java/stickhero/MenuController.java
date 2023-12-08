@@ -44,7 +44,6 @@ public class MenuController {
     }
 
     public void loadGame() {
-        System.out.println("ha lame");
     }
 
     public void quit() {
