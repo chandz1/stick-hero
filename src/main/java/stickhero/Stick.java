@@ -33,30 +33,30 @@ public class Stick extends Rectangle implements Serializable, Movable {
             return;
         }
         // scale by screen size - height of pillar
-        float temp = 1000 - 300;
         this.setOpacity(1);
-        scaleAnimator.setByY(temp);
-        translateAnimator.setByY(-temp/2);
+        double scaleBy = Utils.getPane().getHeight() - Utils.getBasePillar().getHeight() - 100;
+        scaleAnimator.setByY(scaleBy);
+        translateAnimator.setByY(-scaleBy/2);
         scaleStick.play();
     }
 
-    public void stopStick() {
+    public RotateTransition stopStick() {
         if (scaled) {
-            return;
+            return null;
         }
         scaleStick.stop();
         scaled = true;
-        rotateStick();
+        return rotateStick();
     }
 
-    private void rotateStick() {
+    private RotateTransition rotateStick() {
         rotateAnimator.setByAngle(90);
         rotateAnimator.setInterpolator(Interpolator.EASE_IN);
         // Sets y to -0.5*current pivot (which is center) so it effectively sets it to the bottom
         this.getTransforms().add(new Translate(0,-0.5));
         this.setTranslateX(0);
         this.setTranslateY(0);
-        rotateAnimator.play();
+        return rotateAnimator;
     }
 
     @Override

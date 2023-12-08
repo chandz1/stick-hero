@@ -1,5 +1,8 @@
 package stickhero;
 
+import javafx.animation.ParallelTransition;
+import javafx.animation.RotateTransition;
+import javafx.animation.SequentialTransition;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
@@ -13,17 +16,21 @@ import java.util.ResourceBundle;
 
 public class GameController {
     private BooleanProperty spacePressed = new SimpleBooleanProperty();
+    private Stick stick = null;
 
     public void controlStick() {
-        Stick stick = Utils.getBasePillar().getStick();
 
         getInput();
 
         spacePressed.addListener(((observable, oldValue, newValue) -> {
             if (newValue) {
+                setStick();
                 stick.scaleStick();
             } else {
-                stick.stopStick();
+                RotateTransition rotate = stick.stopStick();
+                ParallelTransition parallel = Utils.getNextPillar().reBase();
+                SequentialTransition sequence = new SequentialTransition(rotate, parallel);
+                sequence.play();
             }
         }));
     }
@@ -40,5 +47,9 @@ public class GameController {
                 spacePressed.set(false);
             }
         });
+    }
+
+    private void setStick() {
+        stick = Utils.getBasePillar().getStick();
     }
 }

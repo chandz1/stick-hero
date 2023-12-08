@@ -46,34 +46,7 @@ public class Game extends Application implements Serializable {
         Pillar pillar1 = new Pillar(false);
         pillar1.bringToScreen(pillar).play();
 
-        Timeline stickTransform = new Timeline();
-        Timeline rotate = new Timeline();
-
-        KeyCombination kc = new KeyCodeCombination(KeyCode.SPACE);
-        scene.setOnKeyPressed(event -> {
-
-            if (kc.match(event)) {
-                stick.setOpacity(1);
-                KeyValue scaleY = new KeyValue(stick.scaleYProperty(), 700);
-                KeyValue translateY = new KeyValue(stick.translateYProperty(), -700/2);
-                KeyFrame keyFrame = new KeyFrame(Duration.millis(1000), scaleY, translateY);
-                stickTransform.getKeyFrames().add(keyFrame);
-                stickTransform.play();
-            }
-        });
-        scene.setOnKeyReleased(event -> {
-            if (kc.match(event)) {
-                stickTransform.stop();
-                stick.getTransforms().add(new Translate(0,-0.5));
-                stick.setTranslateY(0);
-                KeyValue rotateStick = new KeyValue(stick.rotateProperty(), 90, Interpolator.EASE_IN);
-                KeyFrame frame = new KeyFrame(Duration.millis(500), rotateStick);
-                rotate.getKeyFrames().add(frame);
-                ParallelTransition parallel = new ParallelTransition(pillar.removeFromScreen(pillar1), pillar1.moveToBase());
-                SequentialTransition sequence = new SequentialTransition(rotate, parallel);
-                sequence.play();
-            }
-        });
-
+        GameController gameController = new GameController();
+        gameController.controlStick();
     }
 }
