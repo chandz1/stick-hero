@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-
-<Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(#39BC91,#F7A282);" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" />
+<Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(#39BC91,#F7A282);" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Button layoutX="229.0" layoutY="482.0" mnemonicParsing="false" text="QUIT" textAlignment="CENTER">
+         <font>
+            <Font size="40.0" />
+         </font></Button>
+      <Button layoutX="158.0" layoutY="364.0" minWidth="300.0" mnemonicParsing="false" text="LOAD GAME" textAlignment="CENTER">
+         <font>
+            <Font size="40.0" />
+         </font></Button>
+      <Button layoutX="158.0" layoutY="255.0" minWidth="300.0" mnemonicParsing="false" text="NEW GAME" textAlignment="CENTER">
+         <font>
+            <Font size="40.0" />
+         </font></Button>
+      <Label layoutX="94.0" layoutY="91.0" text="STICK HERO" textAlignment="CENTER">
+         <font>
+            <Font size="80.0" />
+         </font></Label>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="300.0" layoutX="225.0" layoutY="700.0" stroke="BLACK" strokeType="INSIDE" width="150.0" />
+   </children>
+</Pane>
