@@ -28,8 +28,12 @@ public class Hero implements Serializable, Movable {
     @Override
     public TranslateTransition move(double x) {
         TranslateTransition translateTransition = new TranslateTransition(Duration.millis(300),skinView);
-        translateTransition.setByX(Utils.getBasePillar().getStick().getScaleY());
+        translateTransition.setByX(x);
         return translateTransition;
+    }
+
+    public ImageView getSkinView() {
+        return skinView;
     }
 
     public Score getScore() {
