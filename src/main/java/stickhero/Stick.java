@@ -46,6 +46,7 @@ public class Stick extends Rectangle implements Serializable, Movable {
         }
         scaleTranslateAnimator.stop();
         scaled = true;
+        System.out.println(isWithinBounds(Utils.getNextPillar()));
         return rotateStick();
     }
 
@@ -64,5 +65,12 @@ public class Stick extends Rectangle implements Serializable, Movable {
         TranslateTransition translateTransition = new TranslateTransition(Duration.millis(300),this);
         translateTransition.setByX(x);
         return translateTransition;
+    }
+
+    public boolean isWithinBounds(Pillar bounds) {
+        double stickDistance = 97.5 + this.getScaleY();
+        double boundsX1 = bounds.getCurrentX();
+        double boundsX2 = bounds.getWidth() + bounds.getCurrentX();
+        return boundsX1 < stickDistance && stickDistance < boundsX2;
     }
 }

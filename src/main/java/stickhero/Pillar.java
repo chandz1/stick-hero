@@ -16,7 +16,6 @@ public class Pillar extends Rectangle implements Serializable, Movable {
     private Pane parentPane;
     private Stick stick;
     private Stick prevStick;
-    private int id;
 
     public Pillar(double x, double width) {
         super(x, 1000-300, width, 300);
@@ -33,12 +32,6 @@ public class Pillar extends Rectangle implements Serializable, Movable {
             Utils.setNextPillar(this);
         }
         this.stick = new Stick();
-        this.id = Utils.getId();
-        Utils.setId(Utils.getId() + 1);
-    }
-
-    public int getid() {
-        return id;
     }
 
     public Stick getPrevStick() {
@@ -67,7 +60,7 @@ public class Pillar extends Rectangle implements Serializable, Movable {
     }
 
     public double getCurrentX() {
-        return 600.0 + this.getTranslateX();
+        return this.getX() + this.getTranslateX();
     }
 
     @Override
