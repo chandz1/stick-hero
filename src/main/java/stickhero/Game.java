@@ -37,17 +37,6 @@ public class Game extends Application implements Serializable {
         stage.setResizable(false);
         stage.show();
 
-        Pane pane = (Pane) scene.lookup("#root");
-        Utils.setPane(pane);
-        Pillar pillar = new Pillar(true);
 
-        Hero hero = new Hero();
-        Utils.setHero(hero);
-
-        Pillar pillar1 = new Pillar(false);
-        pillar1.bringToScreen(pillar).play();
-
-        GameController gameController = new GameController();
-        gameController.controlStick();
     }
 }
