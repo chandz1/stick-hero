@@ -13,7 +13,6 @@ import java.io.Serializable;
 
 public class Pillar extends Rectangle implements Serializable, Movable, Boundable {
     // Used arbitrary value for height temporarily will change later
-    private Pane parentPane;
     private Stick stick;
     private Stick prevStick;
     private BonusZone bonusZone;
@@ -21,8 +20,7 @@ public class Pillar extends Rectangle implements Serializable, Movable, Boundabl
     public Pillar(double x, double width) {
         super(x, 1000-300, width, 300);
         super.setFill(new Color(0, 0, 0, 1));
-        this.parentPane = Utils.getPane();
-        this.parentPane.getChildren().add(this);
+        Utils.getPane().getChildren().add(this);
     }
     // Didn't create getters and setters since they are inherited from Rectangle
     public Pillar(boolean initialPillar) {
@@ -84,7 +82,7 @@ public class Pillar extends Rectangle implements Serializable, Movable, Boundabl
         Random rand = new Random();
 
         // width of the pane subtracted by width of the pillar and the amount of size of basePillar and padding of 64 between pillar and screen
-        double randomize = parentPane.getWidth() - this.getWidth() - 228;
+        double randomize = Utils.getPane().getWidth() - this.getWidth() - 228;
         double translate = rand.nextDouble(randomize) + this.getWidth() + 64;
         return this.moveWithBonus(-translate);
     }
