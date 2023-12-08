@@ -1,12 +1,14 @@
 package stickhero;
 
+import javafx.animation.TranslateTransition;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.util.Duration;
 
 import java.io.Serializable;
 import java.util.Objects;
 
-public class Hero implements Serializable {
+public class Hero implements Serializable, Movable {
     private Image skin;
     private ImageView skinView;
     private Score score;
@@ -21,6 +23,13 @@ public class Hero implements Serializable {
         Utils.getPane().getChildren().add(skinView);
         this.score = new Score();
         this.isDead = false;
+    }
+
+    @Override
+    public TranslateTransition move(double x) {
+        TranslateTransition translateTransition = new TranslateTransition(Duration.millis(300),skinView);
+        translateTransition.setByX(x);
+        return translateTransition;
     }
 
     public Score getScore() {
