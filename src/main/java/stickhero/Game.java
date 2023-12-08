@@ -17,6 +17,7 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Objects;
 
 public class Game extends Application implements Serializable {
     public static void main(String[] args) {
@@ -36,13 +37,13 @@ public class Game extends Application implements Serializable {
         stage.setResizable(false);
         stage.show();
 
-        Image image = new Image((Game.class.getResourceAsStream("cherry.png")));
+        Image image = new Image((Objects.requireNonNull(Game.class.getResourceAsStream("hero.png"))));
         ImageView imageView = new ImageView();
         imageView.setImage(image);
         Pane pane = (Pane) scene.lookup("#root");
         Utils.setPane(pane);
         Pillar pillar = new Pillar(true);
-        imageView.setX(30);
+        imageView.setX(pillar.getWidth()-image.getWidth()-10);
         imageView.setY(pillar.getY() - image.getHeight());
         Stick stick = new Stick(5, 1, pillar.getWidth()-2.5, pane.getHeight() - pillar.getHeight());
 
@@ -75,7 +76,8 @@ public class Game extends Application implements Serializable {
                 KeyValue rotateStick = new KeyValue(stick.rotateProperty(), 90, Interpolator.EASE_IN);
                 KeyFrame keyFrame = new KeyFrame(Duration.millis(500), rotateStick);
                 rotate.getKeyFrames().add(keyFrame);
-                SequentialTransition sequence = new SequentialTransition(rotate, pillar.removeFromScreen(), pillar1.moveToBase());
+                ParallelTransition parallel = new ParallelTransition(pillar.removeFromScreen(), pillar1.moveToBase());
+                SequentialTransition sequence = new SequentialTransition(rotate, parallel);
                 sequence.play();
             }
         });

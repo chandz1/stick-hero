@@ -1,5 +1,6 @@
 package stickhero;
 
+import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -34,7 +35,7 @@ public class Pillar extends Rectangle implements Serializable {
 
     public static int pillarGenWidth(boolean initialPillar) {
         if (initialPillar) {
-            return 150;
+            return 100;
         } else {
             Random rand = new Random();
             return rand.nextInt(280) + 20;
@@ -46,7 +47,7 @@ public class Pillar extends Rectangle implements Serializable {
     }
 
     public TranslateTransition move(double x) {
-        TranslateTransition translateTransition = new TranslateTransition(Duration.millis(250),this);
+        TranslateTransition translateTransition = new TranslateTransition(Duration.millis(300),this);
         translateTransition.setByX(x);
         return translateTransition;
     }
@@ -64,6 +65,6 @@ public class Pillar extends Rectangle implements Serializable {
     }
 
     public TranslateTransition moveToBase() {
-        return this.move(-this.getCurrentX() - this.getWidth() + 150);
+        return this.move(-this.getCurrentX() - this.getWidth() + 100);
     }
 }
