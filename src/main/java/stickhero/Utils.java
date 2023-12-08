@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 
 import java.io.IOException;
+import java.util.Random;
 
 public final class Utils {
     private static Hero hero;
@@ -50,5 +51,10 @@ public final class Utils {
 
     public static Pillar getNextPillar() {
         return nextPillar;
+    }
+
+    public static double getRandomRange(double min, double max) {
+        Random rand = new Random();
+        return rand.nextDouble(max - min) + min;
     }
 }

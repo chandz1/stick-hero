@@ -16,6 +16,7 @@ public class Pillar extends Rectangle implements Serializable, Movable, Boundabl
     private Stick stick;
     private Stick prevStick;
     private BonusZone bonusZone;
+    private Cherry cherry;
 
     public Pillar(double x, double width) {
         super(x, 1000-300, width, 300);
@@ -30,6 +31,7 @@ public class Pillar extends Rectangle implements Serializable, Movable, Boundabl
         } else {
             Utils.setNextPillar(this);
             this.bonusZone = new BonusZone((int) (this.getX() + this.getWidth()/2 - 6));
+            this.cherry = new Cherry();
         }
         this.stick = new Stick();
     }
@@ -84,7 +86,13 @@ public class Pillar extends Rectangle implements Serializable, Movable, Boundabl
         // width of the pane subtracted by width of the pillar and the amount of size of basePillar and padding of 64 between pillar and screen
         double randomize = Utils.getPane().getWidth() - this.getWidth() - 228;
         double translate = rand.nextDouble(randomize) + this.getWidth() + 64;
-        return this.moveWithBonus(-translate);
+
+        if (cherry == null) {
+            return this.moveWithBonus(-translate);
+        } else {
+            double cherryTranslate = Utils.getRandomRange(600 - translate, 500);
+            return new ParallelTransition(this.moveWithBonus(-translate), this.cherry.move(-cherryTranslate));
+        }
     }
 
     public double screenTranslateValue() {
@@ -108,9 +116,11 @@ public class Pillar extends Rectangle implements Serializable, Movable, Boundabl
 
     public ParallelTransition reBase() {
         Pillar prevBase = Utils.getBasePillar();
-        Utils.setBasePillar(this);
         prevStick = prevBase.getStick();
         TranslateTransition rebaseHero = moveHero(this);
+        rebaseHero.setOnFinished(actionEvent -> {
+            Utils.setBasePillar(this);
+        });
         if (prevBase.getPrevStick() == null) {
             return new ParallelTransition(prevBase.removeFromScreen(this), this.moveToBase(), prevBase.moveStick(this), rebaseHero);
         } else {
