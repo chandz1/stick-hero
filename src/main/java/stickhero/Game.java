@@ -23,7 +23,9 @@ public class Game extends Application implements Serializable {
 
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Game.class.getResource("Background.fxml"));
+
+
+        FXMLLoader fxmlLoader = new FXMLLoader(Game.class.getResource("MainMenu.fxml"));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root, 600, 1000);
 

@@ -12,11 +12,11 @@
          <font>
             <Font size="40.0" />
          </font></Button>
-      <Button layoutX="150.0" layoutY="375.0" minWidth="300.0" mnemonicParsing="false" text="LOAD GAME" textAlignment="CENTER">
+      <Button fx:id="loadGameButton" layoutX="150.0" layoutY="375.0" minWidth="300.0" mnemonicParsing="false" onAction="#loadGame" text="LOAD GAME" textAlignment="CENTER">
          <font>
             <Font size="40.0" />
          </font></Button>
-      <Button layoutX="150.0" layoutY="250.0" minWidth="300.0" mnemonicParsing="false" text="NEW GAME">
+      <Button fx:id="newGameButton" layoutX="150.0" layoutY="250.0" minWidth="300.0" mnemonicParsing="false" onAction="#newGame" text="NEW GAME">
          <font>
             <Font size="40.0" />
          </font></Button>
