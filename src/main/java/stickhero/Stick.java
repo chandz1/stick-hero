@@ -48,7 +48,6 @@ public class Stick extends Rectangle implements Serializable, Movable {
         }
         scaleTranslateAnimator.stop();
         scaled = true;
-        System.out.println(isWithinBounds(Utils.getNextPillar()));
         return rotateStick();
     }
 
