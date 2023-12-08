@@ -40,7 +40,7 @@ public class Game extends Application implements Serializable {
         Pane pane = (Pane) scene.lookup("#root");
         Utils.setPane(pane);
         Pillar pillar = new Pillar(true);
-        Utils.setBasePillar(pillar);
+
         Stick stick = new Stick();
 
         Hero hero = new Hero();

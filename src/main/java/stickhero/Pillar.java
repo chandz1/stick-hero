@@ -1,6 +1,5 @@
 package stickhero;
 
-import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -13,16 +12,21 @@ import java.io.Serializable;
 public class Pillar extends Rectangle implements Serializable {
     // Used arbitrary value for height temporarily will change later
     private Pane parentPane;
+    private Stick stick;
 
     public Pillar(double x, double width) {
         super(x, 1000-300, width, 300);
         super.setFill(new Color(0, 0, 0, 1));
-        parentPane = Utils.getPane();
-        parentPane.getChildren().add(this);
+        this.parentPane = Utils.getPane();
+        this.parentPane.getChildren().add(this);
     }
     // Didn't create getters and setters since they are inherited from Rectangle
     public Pillar(boolean initialPillar) {
         this(pillarGenX(initialPillar), pillarGenWidth(initialPillar));
+        if (initialPillar) {
+            Utils.setBasePillar(this);
+        }
+        this.stick = new Stick();
     }
 
     public static int pillarGenX(boolean initialPillar) {
