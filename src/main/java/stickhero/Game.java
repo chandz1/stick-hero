@@ -72,7 +72,7 @@ public class Game extends Application implements Serializable {
                 KeyValue rotateStick = new KeyValue(stick.rotateProperty(), 90, Interpolator.EASE_IN);
                 KeyFrame frame = new KeyFrame(Duration.millis(500), rotateStick);
                 rotate.getKeyFrames().add(frame);
-                ParallelTransition parallel = new ParallelTransition(pillar.removeFromScreen(), pillar1.moveToBase());
+                ParallelTransition parallel = new ParallelTransition(pillar.removeFromScreen(pillar1), pillar1.moveToBase());
                 SequentialTransition sequence = new SequentialTransition(rotate, parallel);
                 sequence.play();
             }

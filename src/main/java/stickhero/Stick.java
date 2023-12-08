@@ -8,7 +8,7 @@ import javafx.util.Duration;
 
 import java.io.Serializable;
 
-public class Stick extends Rectangle implements Serializable {
+public class Stick extends Rectangle implements Serializable, Movable {
     private final RotateTransition rotateAnimator;
     private final ScaleTransition scaleAnimator;
     private final TranslateTransition translateAnimator;
@@ -56,5 +56,12 @@ public class Stick extends Rectangle implements Serializable {
         this.setTranslateX(0);
         this.setTranslateY(0);
         rotateAnimator.play();
+    }
+
+    @Override
+    public TranslateTransition move(double x) {
+        TranslateTransition translateTransition = new TranslateTransition(Duration.millis(300),this);
+        translateTransition.setByX(x);
+        return translateTransition;
     }
 }

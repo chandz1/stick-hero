@@ -1,5 +1,6 @@
 package stickhero;
 
+import javafx.animation.ParallelTransition;
 import javafx.animation.TranslateTransition;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -9,7 +10,7 @@ import java.util.Random;
 
 import java.io.Serializable;
 
-public class Pillar extends Rectangle implements Serializable {
+public class Pillar extends Rectangle implements Serializable, Movable {
     // Used arbitrary value for height temporarily will change later
     private Pane parentPane;
     private Stick stick;
@@ -54,6 +55,7 @@ public class Pillar extends Rectangle implements Serializable {
         return 600.0 + this.getTranslateX();
     }
 
+    @Override
     public TranslateTransition move(double x) {
         TranslateTransition translateTransition = new TranslateTransition(Duration.millis(300),this);
         translateTransition.setByX(x);
@@ -68,11 +70,25 @@ public class Pillar extends Rectangle implements Serializable {
         return this.move(-translate);
     }
 
-    public TranslateTransition removeFromScreen() {
-        return this.move(-(this.getWidth() + this.getX()));
+    public double screenTranslateValue() {
+        return -(this.getCurrentX() + this.getWidth() - 100);
+    }
+
+    public TranslateTransition removeFromScreen(Pillar newBase) {
+        return this.move(newBase.screenTranslateValue());
     }
 
     public TranslateTransition moveToBase() {
-        return this.move(-this.getCurrentX() - this.getWidth() + 100);
+        return this.move(this.screenTranslateValue());
+    }
+
+    public TranslateTransition moveStick() {
+        return this.getStick().move(this.screenTranslateValue());
+    }
+
+    public ParallelTransition reBase() {
+        Pillar prevBase = Utils.getBasePillar();
+        Utils.setBasePillar(this);
+        return new ParallelTransition(prevBase.removeFromScreen(this), this.moveToBase(), this.moveStick());
     }
 }
