@@ -13,7 +13,7 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 public class GameController {
-    private BooleanProperty spacePressed = new SimpleBooleanProperty();
+    private final BooleanProperty spacePressed = new SimpleBooleanProperty();
     private EventHandler<KeyEvent> spacePressEvent;
     private EventHandler<KeyEvent> spaceReleaseEvent;
 
@@ -54,6 +54,14 @@ public class GameController {
         Utils.getCurrentScene().addEventHandler(KeyEvent.KEY_RELEASED, spaceReleaseEvent);
     }
 
+    private void continueGame(Hero hero, Pillar pillar, RotateTransition rotateStick) {
+        TranslateTransition moveHero = hero.move(pillar.getCurrentX() + pillar.getWidth() - 100);
+        ParallelTransition rebasePillar = pillar.reBase();
+        ParallelTransition newPillarToScreen  = new Pillar(false).bringToScreen();
+        SequentialTransition sequence = new SequentialTransition(rotateStick, moveHero, rebasePillar, newPillarToScreen);
+        sequence.play();
+    }
+
     private void gameOver(Hero hero, Stick stick, Pillar pillar, RotateTransition rotateStick) {
         // Move hero by stick length plus an arbitrary value
         TranslateTransition moveHero = hero.move(stick.getScaleY());
@@ -82,13 +90,5 @@ public class GameController {
         gameOver.setX(300-gameOver.getLayoutBounds().getWidth()/2);
         gameOver.setY(500-gameOver.getLayoutBounds().getHeight()/2);
         Utils.getPane().getChildren().add(gameOver);
-    }
-
-    private void continueGame(Hero hero, Pillar pillar, RotateTransition rotateStick) {
-        TranslateTransition moveHero = hero.move(pillar.getCurrentX() + pillar.getWidth() - 100);
-        ParallelTransition rebasePillar = pillar.reBase();
-        ParallelTransition newPillarToScreen  = new Pillar(false).bringToScreen();
-        SequentialTransition sequence = new SequentialTransition(rotateStick, moveHero, rebasePillar, newPillarToScreen);
-        sequence.play();
     }
 }
