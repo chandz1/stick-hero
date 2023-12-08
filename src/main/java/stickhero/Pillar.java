@@ -46,6 +46,10 @@ public class Pillar extends Rectangle implements Serializable {
         }
     }
 
+    public Stick getStick() {
+        return stick;
+    }
+
     public double getCurrentX() {
         return 600.0 + this.getTranslateX();
     }

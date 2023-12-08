@@ -34,6 +34,7 @@ public class Game extends Application implements Serializable {
         // Scene scene = new Scene(fxmlLoader.load(), 1920, 1080);
         stage.setTitle("Stick Hero");
         stage.setScene(scene);
+        Utils.setCurrentScene(scene);
         stage.setResizable(false);
         stage.show();
 

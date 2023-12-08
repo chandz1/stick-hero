@@ -1,15 +1,10 @@
 package stickhero;
 
-import javafx.animation.RotateTransition;
-import javafx.animation.ScaleTransition;
-import javafx.animation.TranslateTransition;
-import javafx.geometry.Point3D;
+import javafx.animation.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Translate;
 import javafx.util.Duration;
-import javafx.scene.layout.Pane;
-import javafx.fxml.FXML;
 
 import java.io.Serializable;
 
@@ -17,6 +12,7 @@ public class Stick extends Rectangle implements Serializable {
     private final RotateTransition rotateAnimator;
     private final ScaleTransition scaleAnimator;
     private final TranslateTransition translateAnimator;
+    private final ParallelTransition scaleStick;
     private boolean scaled;
 
     public Stick() {
@@ -26,9 +22,10 @@ public class Stick extends Rectangle implements Serializable {
         Utils.getPane().getChildren().add(this);
         this.setOpacity(0);
         this.scaled = false;
-        this.rotateAnimator = new RotateTransition(Duration.millis(700), this);
+        this.rotateAnimator = new RotateTransition(Duration.millis(500), this);
         this.scaleAnimator = new ScaleTransition(Duration.millis(1500), this);
         this.translateAnimator = new TranslateTransition(Duration.millis(1500), this);
+        this.scaleStick = new ParallelTransition(scaleAnimator,translateAnimator);
     }
 
     public void scaleStick() {
@@ -39,22 +36,22 @@ public class Stick extends Rectangle implements Serializable {
         float temp = 1000 - 300;
         scaleAnimator.setByY(temp);
         translateAnimator.setByY(-temp/2);
-        scaleAnimator.play();
-        translateAnimator.play();
+        scaleStick.play();
     }
 
     public void stopStick() {
         if (scaled) {
             return;
         }
-        scaleAnimator.stop();
-        translateAnimator.stop();
+        scaleStick.stop();
         scaled = true;
         rotateStick();
     }
 
     private void rotateStick() {
         rotateAnimator.setByAngle(90);
+        rotateAnimator.setInterpolator(Interpolator.EASE_IN);
+        // Sets y to -0.5*current pivot (which is center) so it effectively sets it to the bottom
         this.getTransforms().add(new Translate(0,-0.5));
         this.setTranslateX(0);
         this.setTranslateY(0);
