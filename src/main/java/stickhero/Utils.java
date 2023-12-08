@@ -4,10 +4,20 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 
 public final class Utils {
+    private static Hero hero;
     private static Pane currentPane;
     private static Scene currentScene;
     private static Pillar basePillar;
     private static Pillar nextPillar;
+
+    public static Hero getHero() {
+        return hero;
+    }
+
+    public static void setHero(Hero hero) {
+        Utils.hero = hero;
+    }
+
     public static void setPane(Pane pane) {
         currentPane = pane;
     }
