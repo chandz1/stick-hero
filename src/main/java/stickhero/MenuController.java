@@ -10,6 +10,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import static javafx.application.Platform.exit;
 
@@ -23,18 +24,14 @@ public class MenuController {
     @FXML
     private Button loadGameButton;
 
-    public Scene getGameScene() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Game.class.getResource("Background.fxml"));
-        return new Scene(fxmlLoader.load(), 600, 1000);
-    }
+    @FXML
+    private Pane root;
 
-    public void newGame(ActionEvent actionEvent) throws IOException {
-        Stage primaryStage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-        Scene bgScene = getGameScene();
-        primaryStage.setScene(bgScene);
 
-        Pane pane = (Pane) bgScene.lookup("#root");
-        Utils.setPane(pane);
+    public void newGame() throws IOException {
+        Pane pane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Background.fxml")));
+        root.getChildren().setAll(pane);
+        Utils.setPane(root );
         Pillar pillar = new Pillar(true);
 
         Hero hero = new Hero();
@@ -43,6 +40,8 @@ public class MenuController {
         Pillar pillar1 = new Pillar(false);
         pillar1.bringToScreen(pillar).play();
 
+        GameController gameController = new GameController();
+        gameController.controlStick();
 
     }
 

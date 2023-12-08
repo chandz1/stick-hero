@@ -15,6 +15,7 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Objects;
 
 public class Game extends Application implements Serializable {
     public static void main(String[] args) {
@@ -25,9 +26,8 @@ public class Game extends Application implements Serializable {
     public void start(Stage stage) throws IOException {
 
 
-        FXMLLoader fxmlLoader = new FXMLLoader(Game.class.getResource("MainMenu.fxml"));
-        Parent root = fxmlLoader.load();
-        Scene scene = new Scene(root, 600, 1000);
+        Pane pane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("MainMenu.fxml")));
+        Scene scene = new Scene(pane, 600, 1000);
 
 
         // Scene scene = new Scene(fxmlLoader.load(), 1920, 1080);
@@ -37,6 +37,7 @@ public class Game extends Application implements Serializable {
         stage.setResizable(false);
         stage.show();
 
+        Utils.setPane(pane);
 
     }
 }
