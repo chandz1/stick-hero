@@ -16,7 +16,6 @@ import java.util.ResourceBundle;
 
 public class GameController {
     private BooleanProperty spacePressed = new SimpleBooleanProperty();
-    private Stick stick = null;
 
     public void controlStick() {
 
@@ -24,10 +23,9 @@ public class GameController {
 
         spacePressed.addListener(((observable, oldValue, newValue) -> {
             if (newValue) {
-                setStick();
-                stick.scaleStick();
+                getStick().scaleStick();
             } else {
-                RotateTransition rotate = stick.stopStick();
+                RotateTransition rotate = getStick().stopStick();
                 ParallelTransition parallel = Utils.getNextPillar().reBase();
                 SequentialTransition sequence = new SequentialTransition(rotate, parallel);
                 sequence.play();
@@ -49,7 +47,7 @@ public class GameController {
         });
     }
 
-    private void setStick() {
-        stick = Utils.getBasePillar().getStick();
+    private Stick getStick() {
+        return Utils.getBasePillar().getStick();
     }
 }
