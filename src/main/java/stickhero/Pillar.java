@@ -91,6 +91,6 @@ public class Pillar extends Rectangle implements Serializable, Movable {
     public ParallelTransition reBase() {
         Pillar prevBase = Utils.getBasePillar();
         Utils.setBasePillar(this);
-        return new ParallelTransition(prevBase.removeFromScreen(this), this.moveToBase(), this.moveStick());
+        return new ParallelTransition(prevBase.removeFromScreen(this), this.moveToBase(), prevBase.moveStick());
     }
 }
