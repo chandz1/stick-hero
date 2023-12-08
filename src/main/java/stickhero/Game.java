@@ -39,9 +39,8 @@ public class Game extends Application implements Serializable {
         Utils.setPane(pane);
         Pillar pillar = new Pillar(true);
 
-        Stick stick = new Stick();
-
         Hero hero = new Hero();
+        Utils.setHero(hero);
 
         Pillar pillar1 = new Pillar(false);
         pillar1.bringToScreen(pillar).play();
