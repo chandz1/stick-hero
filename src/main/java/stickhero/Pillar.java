@@ -94,15 +94,19 @@ public class Pillar extends Rectangle implements Serializable, Movable {
     public TranslateTransition moveStick(Pillar newBase) {
         return stick.move(newBase.screenTranslateValue());
     }
+    public TranslateTransition moveHero(Pillar newBase) {
+        return Utils.getHero().move(newBase.screenTranslateValue());
+    }
 
     public ParallelTransition reBase() {
         Pillar prevBase = Utils.getBasePillar();
         Utils.setBasePillar(this);
         prevStick = prevBase.getStick();
+        TranslateTransition rebaseHero = moveHero(this);
         if (prevBase.getPrevStick() == null) {
-            return new ParallelTransition(prevBase.removeFromScreen(this), this.moveToBase(), prevBase.moveStick(this));
+            return new ParallelTransition(prevBase.removeFromScreen(this), this.moveToBase(), prevBase.moveStick(this), rebaseHero);
         } else {
-            return new ParallelTransition(prevBase.removeFromScreen(this), this.moveToBase(), prevBase.moveStick(this), prevBase.getPrevStick().move(this.screenTranslateValue()));
+            return new ParallelTransition(prevBase.removeFromScreen(this), this.moveToBase(), prevBase.moveStick(this), prevBase.getPrevStick().move(this.screenTranslateValue()),rebaseHero);
         }
     }
 }

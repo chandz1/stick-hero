@@ -28,7 +28,7 @@ public class GameController {
             } else {
                 RotateTransition rotateStick = getStick().stopStick();
                 if (getStick().isWithinBounds(Utils.getNextPillar())) {
-                    TranslateTransition moveHero = Utils.getHero().move(0);
+                    TranslateTransition moveHero = Utils.getHero().move(Utils.getNextPillar().getCurrentX() + Utils.getNextPillar().getWidth() - 100);
                     ParallelTransition rebasePillar = Utils.getNextPillar().reBase();
                     TranslateTransition newPillarToScreen  = new Pillar(false).bringToScreen(Utils.getBasePillar());
                     SequentialTransition sequence = new SequentialTransition(rotateStick, moveHero, rebasePillar, newPillarToScreen);
