@@ -15,6 +15,8 @@ public class Pillar extends Rectangle implements Serializable, Movable {
     // Used arbitrary value for height temporarily will change later
     private Pane parentPane;
     private Stick stick;
+    private Stick prevStick;
+    private int id;
 
     public Pillar(double x, double width) {
         super(x, 1000-300, width, 300);
@@ -31,6 +33,16 @@ public class Pillar extends Rectangle implements Serializable, Movable {
             Utils.setNextPillar(this);
         }
         this.stick = new Stick();
+        this.id = Utils.getId();
+        Utils.setId(Utils.getId() + 1);
+    }
+
+    public int getid() {
+        return id;
+    }
+
+    public Stick getPrevStick() {
+        return prevStick;
     }
 
     public static int pillarGenX(boolean initialPillar) {
@@ -74,6 +86,7 @@ public class Pillar extends Rectangle implements Serializable, Movable {
     }
 
     public double screenTranslateValue() {
+        System.out.println(-(this.getCurrentX() + this.getWidth() - 100));
         return -(this.getCurrentX() + this.getWidth() - 100);
     }
 
@@ -85,13 +98,18 @@ public class Pillar extends Rectangle implements Serializable, Movable {
         return this.move(this.screenTranslateValue());
     }
 
-    public TranslateTransition moveStick() {
-        return this.getStick().move(this.screenTranslateValue());
+    public TranslateTransition moveStick(Pillar newBase) {
+        return stick.move(newBase.screenTranslateValue());
     }
 
     public ParallelTransition reBase() {
         Pillar prevBase = Utils.getBasePillar();
         Utils.setBasePillar(this);
-        return new ParallelTransition(prevBase.removeFromScreen(this), this.moveToBase(), prevBase.moveStick());
+        prevStick = prevBase.getStick();
+        if (prevBase.getPrevStick() == null) {
+            return new ParallelTransition(prevBase.removeFromScreen(this), this.moveToBase(), prevBase.moveStick(this));
+        } else {
+            return new ParallelTransition(prevBase.removeFromScreen(this), this.moveToBase(), prevBase.moveStick(this), prevBase.getPrevStick().move(this.screenTranslateValue()));
+        }
     }
 }

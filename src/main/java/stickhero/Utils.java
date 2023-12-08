@@ -9,6 +9,15 @@ public final class Utils {
     private static Scene currentScene;
     private static Pillar basePillar;
     private static Pillar nextPillar;
+    private static int id = 0;
+
+    public static void setId(int id) {
+        Utils.id = id;
+    }
+
+    public static int getId() {
+        return id;
+    }
 
     public static Hero getHero() {
         return hero;
