@@ -86,7 +86,6 @@ public class Pillar extends Rectangle implements Serializable, Movable {
     }
 
     public double screenTranslateValue() {
-        System.out.println(-(this.getCurrentX() + this.getWidth() - 100));
         return -(this.getCurrentX() + this.getWidth() - 100);
     }
 

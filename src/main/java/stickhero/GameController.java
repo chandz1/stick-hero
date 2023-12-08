@@ -1,7 +1,9 @@
 package stickhero;
 
+import javafx.animation.ParallelTransition;
 import javafx.animation.RotateTransition;
 import javafx.animation.SequentialTransition;
+import javafx.animation.TranslateTransition;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.input.KeyCode;
@@ -17,8 +19,11 @@ public class GameController {
             if (newValue) {
                 getStick().scaleStick();
             } else {
-                RotateTransition rotate = getStick().stopStick();
-                SequentialTransition sequence = new SequentialTransition(rotate, Utils.getNextPillar().reBase(), new Pillar(false).bringToScreen(Utils.getBasePillar()));
+                RotateTransition rotateStick = getStick().stopStick();
+                TranslateTransition moveHero = Utils.getHero().move(0);
+                ParallelTransition rebasePillar = Utils.getNextPillar().reBase();
+                TranslateTransition newPillarToScreen  = new Pillar(false).bringToScreen(Utils.getBasePillar());
+                SequentialTransition sequence = new SequentialTransition(rotateStick, moveHero, rebasePillar, newPillarToScreen);
                 sequence.play();
             }
         }));
