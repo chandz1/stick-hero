@@ -26,8 +26,7 @@ public class GameController {
                 getStick().scaleStick();
             } else {
                 RotateTransition rotate = getStick().stopStick();
-                ParallelTransition parallel = Utils.getNextPillar().reBase();
-                SequentialTransition sequence = new SequentialTransition(rotate, parallel);
+                SequentialTransition sequence = new SequentialTransition(rotate, Utils.getNextPillar().reBase(), new Pillar(false).bringToScreen(Utils.getBasePillar()));
                 sequence.play();
             }
         }));

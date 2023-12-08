@@ -1,6 +1,7 @@
 package stickhero;
 
 import javafx.animation.ParallelTransition;
+import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
