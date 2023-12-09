@@ -393,6 +393,7 @@ public class GameController implements Initializable {
         highScoreText.setVisible(true);
         highScore.setVisible(true);
         restartButton.setDisable(false);
+        (Utils.getPane().lookup("#goBackButton")).setDisable(false);
     }
 
     // the hero's move timer is initialized
