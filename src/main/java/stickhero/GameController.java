@@ -142,7 +142,7 @@ public class GameController {
 
     private void gameOver(Hero hero, Stick stick, Pillar pillar, RotateTransition rotateStick) {
         // Move hero by stick length plus an arbitrary value
-        TranslateTransition moveHero = hero.move(stick.getScaleY(), 700);
+        TranslateTransition moveHero = hero.move(stick.getScaleY() + 30, 700);
         // Rotate stick by 90 degrees if stick not within bounds of pillar.
         RotateTransition rotate = new RotateTransition(Duration.millis(200), stick);
         // Set rotation angle to 90 degrees
