@@ -42,6 +42,8 @@ public class MenuController implements Initializable {
         Score score = new Score();
         Utils.setScore(score);
 
+        Utils.getScore().updateScore();
+
         GameController gameController = new GameController();
         gameController.controlGame();
     }
@@ -53,6 +55,7 @@ public class MenuController implements Initializable {
         SaveManager.getInstance().load();
         Hero hero = new Hero();
         Utils.setHero(hero);
+        Utils.getScore().updateScore();
 
         GameController gameController = new GameController();
         gameController.controlGame();

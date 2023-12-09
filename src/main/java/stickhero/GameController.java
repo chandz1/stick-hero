@@ -86,6 +86,7 @@ public class GameController implements Initializable {
         pillar1.bringToScreen().play();
 
         Utils.getScore().resetCurrentScore();
+        Utils.getScore().updateScore();
 
         GameController gameController = new GameController();
         gameController.controlGame();
@@ -101,6 +102,8 @@ public class GameController implements Initializable {
 
         Hero hero = new Hero();
         Utils.setHero(hero);
+
+        Utils.getScore().updateScore();
 
         Pillar pillar1 = new Pillar(false);
         pillar1.bringToScreen().play();
@@ -196,6 +199,7 @@ public class GameController implements Initializable {
         moveHero.setOnFinished(event -> {
             System.out.println("Hero Moved");
             heroMoveTimer.stop();
+            Utils.getScore().updateScore();
         });
         mainSequence.setOnFinished(event -> {
             System.out.println("Transition Complete");

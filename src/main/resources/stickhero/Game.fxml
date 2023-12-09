@@ -50,7 +50,7 @@
                   <Font size="20.0" />
                </font>
             </Button>
-            <Button fx:id="reviveButton" minWidth="100.0" mnemonicParsing="false" text="Revive" StackPane.alignment="CENTER">
+            <Button fx:id="reviveButton" minWidth="100.0" mnemonicParsing="false" onAction="#reviveGame" text="Revive" StackPane.alignment="CENTER">
                <StackPane.margin>
                   <Insets top="40.0" />
                </StackPane.margin>

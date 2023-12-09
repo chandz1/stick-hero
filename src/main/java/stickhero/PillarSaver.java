@@ -10,8 +10,17 @@ public class PillarSaver implements Serializable {
     public PillarSaver(Pillar pillar) {
         this.x = pillar.getCurrentX();
         this.width = pillar.getWidth();
-        this.bonusZoneX = pillar.getBonusZone().getCurrentX();
-        this.cherryX = pillar.getCherry().getCurrentX();
+        if (pillar.getBonusZone() != null) {
+            this.bonusZoneX = pillar.getBonusZone().getCurrentX();
+        } else {
+            this.bonusZoneX = 600;
+        }
+        if (pillar.getCherry() != null) {
+            this.cherryX = pillar.getCherry().getCurrentX();
+        } else {
+            this.cherryX = 600;
+        }
+
     }
 
     public void createPillar(boolean isBase) {
