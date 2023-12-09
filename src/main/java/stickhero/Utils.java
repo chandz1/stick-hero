@@ -1,6 +1,7 @@
 package stickhero;
 
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -62,4 +63,6 @@ public final class Utils {
     public static Pillar getNextPillar() {
         return nextPillar;
     }
+
+    public static Node paneLookup(String lookup) { return getPane().lookup(lookup); }
 }

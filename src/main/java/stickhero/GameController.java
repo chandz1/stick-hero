@@ -5,15 +5,20 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class GameController implements Initializable {
@@ -29,13 +34,79 @@ public class GameController implements Initializable {
     @FXML
     private Button saveButton;
 
+    @FXML
+    private Button restartButton;
+
+    @FXML
+    private Button reviveButton;
+
+    @FXML
+    private Label gameOverText;
+
+    @FXML
+    private Label cherryToRevive;
+
+    @FXML
+    private ImageView cherryReviveImage;
+
+    @FXML
+    private Label highScoreText;
+
+    @FXML
+    private Label highScore;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         saveButton.setFocusTraversable(false);
+        restartButton.setFocusTraversable(false);
+        reviveButton.setFocusTraversable(false);
+        reviveButton.setDisable(true);
+        reviveButton.setOpacity(0);
+        gameOverText.setOpacity(0);
+        cherryToRevive.setOpacity(0);
+        cherryReviveImage.setOpacity(0);
+        highScoreText.setOpacity(0);
+        highScore.setOpacity(0);
     }
     @FXML
     public void saveGame() throws IOException {
         SaveManager.getInstance().save();
+    }
+
+    @FXML
+    public void restartGame() throws IOException {
+        Pane pane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Game.fxml")));
+        Utils.getPane().getChildren().setAll(pane);
+        Pillar pillar = new Pillar(true);
+
+        Hero hero = new Hero();
+        Utils.setHero(hero);
+
+        Pillar pillar1 = new Pillar(false);
+        pillar1.bringToScreen().play();
+
+        Score score = new Score();
+        Utils.setScore(score);
+
+        GameController gameController = new GameController();
+        gameController.controlStick();
+    }
+
+    @FXML
+    public void reviveGame() throws IOException {
+        PillarSaver savedBasePillar = new PillarSaver(Utils.getBasePillar());
+        Pane pane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Game.fxml")));
+        Utils.getPane().getChildren().setAll(pane);
+        savedBasePillar.createPillar(true);
+
+        Hero hero = new Hero();
+        Utils.setHero(hero);
+
+        Pillar pillar1 = new Pillar(false);
+        pillar1.bringToScreen().play();
+
+        GameController gameController = new GameController();
+        gameController.controlStick();
     }
 
     public void controlStick() {
@@ -164,9 +235,20 @@ public class GameController implements Initializable {
     }
 
     private void showGameOverText() {
-        Text gameOver = new Text(300,500,"Game Over");
-        gameOver.setX(300-gameOver.getLayoutBounds().getWidth()/2);
-        gameOver.setY(500-gameOver.getLayoutBounds().getHeight()/2);
-        Utils.getPane().getChildren().add(gameOver);
+        Button reviveButton = (Button) Utils.paneLookup("#reviveButton");
+        Label gameOverText = (Label) Utils.paneLookup("#gameOverText");
+        Label cherryToRevive = (Label) Utils.paneLookup("#cherryToRevive");
+        ImageView cherryReviveImage = (ImageView) Utils.paneLookup("#cherryReviveImage");
+        Label highScoreText = (Label) Utils.paneLookup("#highScoreText");
+        Label highScore = (Label) Utils.paneLookup("#highScore");
+        if (Utils.getScore().getTotalCherries() > Utils.getScore().getReviveCherries()) {
+            reviveButton.setDisable(false);
+        }
+        reviveButton.setOpacity(1);
+        gameOverText.setOpacity(1);
+        cherryToRevive.setOpacity(1);
+        cherryReviveImage.setOpacity(1);
+        highScoreText.setOpacity(1);
+        highScore.setOpacity(1);
     }
 }

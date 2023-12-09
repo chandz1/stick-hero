@@ -42,6 +42,62 @@
                   <Insets right="10.0" top="20.0" />
                </StackPane.margin>
             </ImageView>
+            <Button fx:id="restartButton" minWidth="100.0" mnemonicParsing="false" onAction="#restartGame" text="Restart" StackPane.alignment="TOP_LEFT">
+               <StackPane.margin>
+                  <Insets left="20.0" top="20.0" />
+               </StackPane.margin>
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
+            <Button fx:id="reviveButton" minWidth="100.0" mnemonicParsing="false" text="Revive" StackPane.alignment="CENTER">
+               <StackPane.margin>
+                  <Insets top="40.0" />
+               </StackPane.margin>
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
+            <Label fx:id="gameOverText" text="GAME OVER">
+               <StackPane.margin>
+                  <Insets bottom="200.0" />
+               </StackPane.margin>
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <Label fx:id="cherryToRevive" text="0">
+               <font>
+                  <Font size="20.0" />
+               </font>
+               <StackPane.margin>
+                  <Insets bottom="80.0" right="30.0" />
+               </StackPane.margin>
+            </Label>
+            <ImageView fx:id="cherryReviveImage" layoutX="568.0" layoutY="30.0">
+               <image>
+                  <Image url="@cherry.png" />
+               </image>
+               <StackPane.margin>
+                  <Insets bottom="80.0" left="30.0" />
+               </StackPane.margin>
+            </ImageView>
+            <Label fx:id="highScoreText" layoutX="228.0" layoutY="387.0" text="HIGH SCORE">
+               <font>
+                  <Font size="20.0" />
+               </font>
+               <StackPane.margin>
+                  <Insets bottom="400.0" />
+               </StackPane.margin>
+            </Label>
+            <Label fx:id="highScore" layoutX="228.0" layoutY="487.0" text="0">
+               <font>
+                  <Font size="20.0" />
+               </font>
+               <StackPane.margin>
+                  <Insets bottom="340.0" />
+               </StackPane.margin>
+            </Label>
          </children>
       </StackPane>
    </children>

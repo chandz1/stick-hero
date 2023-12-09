@@ -7,17 +7,14 @@ import java.io.Serializable;
 public class Score implements Serializable {
     private int highScore;
     private int currentScore;
-
-    public Score(int highScore, int currentScore, int totalCherries) {
-        this.highScore = highScore;
-        this.currentScore = currentScore;
-        this.totalCherries = totalCherries;
-    }
+    private int totalCherries;
+    private int reviveCherries;
 
     public Score() {
         this.highScore = 0;
         this.currentScore = 0;
         this.totalCherries = 0;
+        this.reviveCherries = 1;
     }
 
     public void setScore() {
@@ -27,10 +24,16 @@ public class Score implements Serializable {
 
     public void updateScore() {
         Label score = (Label) Utils.getPane().lookup("#score");
-        score.setText(String.valueOf(Utils.getScore().getCurrentScore()));
+        score.setText(String.valueOf(this.getCurrentScore()));
+        Label highScore = (Label) Utils.getPane().lookup("#highScore");
+        highScore.setText(String.valueOf(this.getHighScore()));
+        Label cherry = (Label) Utils.getPane().lookup("#cherryCount");
+        cherry.setText(String.valueOf(this.getTotalCherries()));
+        Label cherryToRevive = (Label) Utils.getPane().lookup("#cherryToRevive");
+        cherryToRevive.setText(String.valueOf(this.getReviveCherries()));
     }
 
-    private int totalCherries;
+
 
     public int getCurrentScore() {
         return currentScore;
@@ -51,11 +54,16 @@ public class Score implements Serializable {
         return totalCherries;
     }
 
-    public void incrementTotalCherries(int increment) {
-        this.totalCherries += increment;
+    public int getReviveCherries() {
+        return reviveCherries;
     }
 
-    public void decrementTotalCherries(int decrement) {
-        this.totalCherries -= decrement;
+    public void incrementTotalCherries() {
+        this.totalCherries++;
+    }
+
+    public void setReviveCherries() {
+        this.totalCherries -= reviveCherries;
+        this.reviveCherries += 1;
     }
 }
