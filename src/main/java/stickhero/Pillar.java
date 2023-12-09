@@ -5,9 +5,8 @@ import javafx.animation.TranslateTransition;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
-import java.util.Random;
 
-import java.io.Serializable;
+import java.util.Random;
 
 // pillar is movable and boundable and is essentially a rectangle. pillar are the pillars that the hero traverses between
 public class Pillar extends Rectangle implements Movable, Boundable {

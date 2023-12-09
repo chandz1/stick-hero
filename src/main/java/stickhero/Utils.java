@@ -6,8 +6,11 @@ import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
+import java.util.Objects;
+
 public final class Utils {
     private static Hero hero;
+    static MediaPlayer bgMusic;
     private static Pane currentPane;
     private static Scene currentScene;
     private static Pillar basePillar;
@@ -91,10 +94,28 @@ public final class Utils {
 
     public static void playCorrect() {
         MediaPlayer correct = new MediaPlayer(new Media(String.valueOf(Utils.class.getResource("correct.wav"))));
+        bgMusic.stop();
+        correct.setOnEndOfMedia(() -> bgMusic.play());
         correct.setAutoPlay(true);
     }
     public static void playLose() {
         MediaPlayer loss = new MediaPlayer(new Media(String.valueOf(Utils.class.getResource("lose.wav"))));
+        bgMusic.stop();
+        loss.setOnEndOfMedia(() -> bgMusic.play());
         loss.setAutoPlay(true);
+    }
+    public static void playBGMusic() {
+        Media bgMusicMedia = new Media(Objects.requireNonNull(Utils.class.getResource("bgmusic.wav")).toString());
+        bgMusic = new MediaPlayer(bgMusicMedia);
+        bgMusic.setOnEndOfMedia(new Runnable() {
+            @Override
+            public void run() {
+                bgMusic.dispose();
+                bgMusic = new MediaPlayer(bgMusicMedia);
+                bgMusic.play();
+                bgMusic.setOnEndOfMedia(this);
+            }
+        });
+        bgMusic.play();
     }
 }

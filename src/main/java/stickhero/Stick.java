@@ -6,8 +6,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Translate;
 import javafx.util.Duration;
 
-import java.io.Serializable;
-
 public class Stick extends Rectangle implements Movable {
     private final RotateTransition rotateAnimator;
     private final ScaleTransition scaleAnimator;

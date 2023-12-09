@@ -4,10 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -15,7 +12,7 @@ import java.util.Objects;
 
 public class Game extends Application implements Serializable {
 
-    MediaPlayer bgMusic;
+
     public static void main(String[] args) {
         launch();
     }
@@ -23,18 +20,7 @@ public class Game extends Application implements Serializable {
     @Override
     public void start(Stage stage) throws IOException {
 
-        Media bgMusicMedia = new Media(Objects.requireNonNull(getClass().getResource("bgmusic.wav")).toString());
-        bgMusic = new MediaPlayer(bgMusicMedia);
-        bgMusic.setOnEndOfMedia(new Runnable() {
-            @Override
-            public void run() {
-                bgMusic.dispose();
-                bgMusic = new MediaPlayer(bgMusicMedia);
-                bgMusic.play();
-                bgMusic.setOnEndOfMedia(this);
-            }
-        });
-        bgMusic.play();
+       Utils.playBGMusic();
 
         // Loads the Main Menu
         Pane pane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("MainMenu.fxml")));
