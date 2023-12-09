@@ -33,6 +33,10 @@ public class Score implements Serializable {
         cherryToRevive.setText(String.valueOf(this.getReviveCherries()));
     }
 
+    public void resetCurrentScore() {
+        this.currentScore = 0;
+    }
+
 
 
     public int getCurrentScore() {

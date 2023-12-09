@@ -85,8 +85,7 @@ public class GameController implements Initializable {
         Pillar pillar1 = new Pillar(false);
         pillar1.bringToScreen().play();
 
-        Score score = new Score();
-        Utils.setScore(score);
+        Utils.getScore().resetCurrentScore();
 
         GameController gameController = new GameController();
         gameController.controlGame();
@@ -94,6 +93,7 @@ public class GameController implements Initializable {
 
     @FXML
     public void reviveGame() throws IOException {
+        Utils.getScore().setReviveCherries();
         PillarSaver savedBasePillar = new PillarSaver(Utils.getBasePillar());
         Pane pane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Game.fxml")));
         Utils.getPane().getChildren().setAll(pane);
