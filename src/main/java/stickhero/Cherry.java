@@ -5,7 +5,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
-import java.io.Serializable;
 import java.util.Objects;
 
 // cherry is movable. cherry image which is a collectible.
@@ -22,7 +21,7 @@ public class Cherry implements Movable {
         this.imageView = new ImageView();
         // sets the imageView to the loaded image
         this.imageView.setImage(this.image);
-        // sets the X and Y position (currently cherry will be off screen and the y position will be parallel to cherry)
+        // sets the X and Y position (currently cherry will be off-screen and the y position will be parallel to cherry)
         this.imageView.setX(600);
         this.imageView.setY(Utils.getBasePillar().getY());
         // put the imageView on screen
@@ -73,7 +72,7 @@ public class Cherry implements Movable {
         return this.getCurrentX() + this.image.getWidth();
     }
 
-    // getter for whether or not cherry was picked up
+    // getter for whether cherry was picked up
     public boolean isPickedUp() {
         return pickedUp;
     }

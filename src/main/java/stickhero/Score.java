@@ -26,7 +26,7 @@ public class Score implements Serializable {
         this.updateScore();
     }
 
-    // updates the on screen values of score
+    // updates the on-screen values of score
     public void updateScore() {
         // Label for score is updated to value of current score
         Label score = (Label) Utils.getPane().lookup("#score");

@@ -1,7 +1,5 @@
 package stickhero;
 
-import javafx.scene.control.Button;
-
 import java.io.*;
 
 // SaveManager is a Singleton class which is Serializable

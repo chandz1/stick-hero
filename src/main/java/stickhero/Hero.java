@@ -5,7 +5,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
-import java.io.Serializable;
 import java.util.Objects;
 
 // Hero is movable. image of the hero that plays the game

@@ -1,12 +1,9 @@
 package stickhero;
 
 import javafx.animation.TranslateTransition;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
-
-import java.io.Serializable;
 
 
 // bonusZone is a Movable and Boundable class. The red bonus zone that gives you extra points

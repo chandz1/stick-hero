@@ -31,7 +31,7 @@ public class MenuController implements Initializable {
     // the function is called when the new game button is pressed
     @FXML
     public void newGame() throws IOException {
-        // invisible mode is set based on its check box
+        // invisible mode is set based on its checkbox
         Utils.setInvisibleMode(invisibleCheck.isSelected());
 
         // loads a new fxml
@@ -42,15 +42,14 @@ public class MenuController implements Initializable {
         Utils.setPane(root);
 
         // creates a new base pillar
-        Pillar pillar = new Pillar(true);
+        new Pillar(true);
 
         // creates a new hero
         Hero hero = new Hero();
         Utils.setHero(hero);
 
         // next pillar is created a brought to screen
-        Pillar pillar1 = new Pillar(false);
-        pillar1.bringToScreen().play();
+        new Pillar(false).bringToScreen().play();
 
         // a new score is created
         Score score = new Score();

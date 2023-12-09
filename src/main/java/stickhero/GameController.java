@@ -7,7 +7,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -87,15 +86,14 @@ public class GameController implements Initializable {
         Utils.getPane().getChildren().setAll(pane);
 
         // creates a new base pillar
-        Pillar pillar = new Pillar(true);
+        new Pillar(true);
 
         // creates a new hero
         Hero hero = new Hero();
         Utils.setHero(hero);
 
         // next pillar is created a brought to screen
-        Pillar pillar1 = new Pillar(false);
-        pillar1.bringToScreen().play();
+        new Pillar(false).bringToScreen().play();
 
         // the scores are reset and updated
         Utils.getScore().resetCurrentScore();
