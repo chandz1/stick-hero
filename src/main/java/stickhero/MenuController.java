@@ -1,5 +1,8 @@
 package stickhero;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.beans.property.StringPropertyBase;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -27,7 +30,7 @@ public class MenuController {
     public void newGame() throws IOException {
         Pane pane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Game.fxml")));
         root.getChildren().setAll(pane);
-        Utils.setPane(root );
+        Utils.setPane(root);
         Pillar pillar = new Pillar(true);
 
         Hero hero = new Hero();

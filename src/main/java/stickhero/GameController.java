@@ -6,8 +6,11 @@ import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -17,7 +20,6 @@ import javafx.util.Duration;
 import java.security.PrivilegedAction;
 
 public class GameController {
-
 
     private final BooleanProperty spacePressed = new SimpleBooleanProperty();
     private EventHandler<KeyEvent> spacePressEvent;
@@ -50,6 +52,8 @@ public class GameController {
                         } else {
                             hero.getScore().incrementCurrentScore(1);
                         }
+                        Label score = (Label) Utils.getPane().lookup("#score");
+                        score.setText(String.valueOf(Utils.getHero().getScore().getCurrentScore()));
                     } else {
                         gameOver(hero, stick, pillar, rotateStick);
                     }
@@ -92,6 +96,7 @@ public class GameController {
 
         Utils.getCurrentScene().addEventHandler(KeyEvent.KEY_PRESSED, spacePressEvent);
         Utils.getCurrentScene().addEventHandler(KeyEvent.KEY_RELEASED, spaceReleaseEvent);
+
     }
 
     private void continueGame(Hero hero, Pillar pillar, RotateTransition rotateStick) {
