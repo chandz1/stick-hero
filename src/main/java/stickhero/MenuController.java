@@ -41,9 +41,6 @@ public class MenuController {
 
         GameController gameController = new GameController();
         gameController.controlStick();
-
-
-
     }
 
     public void loadGame() {

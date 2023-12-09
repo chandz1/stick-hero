@@ -1,16 +1,17 @@
 package stickhero;
 
-import javafx.animation.ParallelTransition;
-import javafx.animation.RotateTransition;
-import javafx.animation.SequentialTransition;
-import javafx.animation.TranslateTransition;
+import javafx.animation.*;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.Event;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.geometry.Point2D;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -56,10 +57,10 @@ public class GameController {
                     if (stick.isWithinBounds(pillar)) {
                         continueGame(hero, pillar, rotateStick);
                         if (stick.isWithinBounds(pillar.getBonusZone())) {
-                            hero.getScore().incrementCurrentScore(2);
-                        } else {
+                            // Increment code by 2 if within the bonus zone
                             hero.getScore().incrementCurrentScore(1);
                         }
+                        hero.getScore().incrementCurrentScore(1);
                         Label score = (Label) Utils.getPane().lookup("#score");
                         score.setText(String.valueOf(Utils.getHero().getScore().getCurrentScore()));
                     } else {
@@ -104,12 +105,12 @@ public class GameController {
 
         Utils.getCurrentScene().addEventHandler(KeyEvent.KEY_PRESSED, spacePressEvent);
         Utils.getCurrentScene().addEventHandler(KeyEvent.KEY_RELEASED, spaceReleaseEvent);
-
     }
 
     private void continueGame(Hero hero, Pillar pillar, RotateTransition rotateStick) {
 
         TranslateTransition moveHero = hero.move(pillar.getCurrentX() + pillar.getWidth() - 100, 700);
+        checkCollisionOnFlip(moveHero);
         ParallelTransition rebasePillar = pillar.reBase();
         ParallelTransition newPillarToScreen  = new Pillar(false).bringToScreen();
         SequentialTransition sequence = new SequentialTransition(rotateStick, moveHero, rebasePillar, newPillarToScreen);
@@ -127,6 +128,16 @@ public class GameController {
             System.out.println("Transition Complete");
         });
         sequence.play();
+    }
+
+    private void checkCollisionOnFlip(TranslateTransition moveHero) {
+        Node node = moveHero.getNode();
+        new Thread(() -> {
+            while(moveHero.getStatus() == Animation.Status.RUNNING) {
+                Point2D point2D = new Point2D(node.getTranslateX(), node.getTranslateY());
+                System.out.println(point2D);
+            }
+        });
     }
 
     private void gameOver(Hero hero, Stick stick, Pillar pillar, RotateTransition rotateStick) {
