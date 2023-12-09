@@ -22,6 +22,15 @@ public class Cherry implements Serializable, Movable {
         Utils.getPane().getChildren().add(this.imageView);
     }
 
+    public Cherry(double x) {
+        this.image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("cherry.png")));
+        this.imageView = new ImageView();
+        this.imageView.setImage(this.image);
+        this.imageView.setX(x);
+        this.imageView.setY(Utils.getBasePillar().getY());
+        Utils.getPane().getChildren().add(this.imageView);
+    }
+
     public void setCherry() {
         this.image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("cherry.png")));
         this.imageView = new ImageView();
@@ -40,5 +49,9 @@ public class Cherry implements Serializable, Movable {
 
     public double getImageWidth() {
         return image.getWidth();
+    }
+
+    public double getCurrentX() {
+        return this.imageView.getX() + this.imageView.getTranslateX();
     }
 }

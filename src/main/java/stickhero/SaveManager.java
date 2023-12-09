@@ -6,18 +6,16 @@ public final class SaveManager implements Serializable {
 
     private static SaveManager saveManager = null;
 
-    private Pillar basePillar = null;
-    private Pillar nextPillar = null;
+    private PillarSaver basePillar = null;
+    private PillarSaver nextPillar = null;
     private Score score = null;
-    private int x;
-
 
     private SaveManager() {
     }
 
     private void setCurrentState() {
-        basePillar = Utils.getBasePillar();
-        nextPillar = Utils.getNextPillar();
+        basePillar = new PillarSaver(Utils.getBasePillar());
+        nextPillar = new PillarSaver(Utils.getNextPillar());
         score = Utils.getScore();
     }
 
@@ -25,7 +23,6 @@ public final class SaveManager implements Serializable {
         if (saveManager == null) {
             saveManager = new SaveManager();
         }
-        saveManager.setCurrentState();
         return saveManager;
     }
 
@@ -34,6 +31,7 @@ public final class SaveManager implements Serializable {
 
         try {
             saveFile = new ObjectOutputStream(new FileOutputStream("save.dat"));
+            saveManager.setCurrentState();
             saveFile.writeObject(saveManager);
         } finally {
             if (saveFile != null) {
@@ -52,8 +50,8 @@ public final class SaveManager implements Serializable {
                 loadFile.close();
             }
         }
-        saveManager.basePillar.setPillar(true);
-        saveManager.nextPillar.setPillar(false);
+        saveManager.basePillar.createPillar(true);
+        saveManager.nextPillar.createPillar(false);
         saveManager.score.setScore();
     }
 }

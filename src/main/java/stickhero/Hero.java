@@ -17,7 +17,7 @@ public class Hero implements Serializable, Movable {
         this.skin = new Image(Objects.requireNonNull(Game.class.getResourceAsStream("hero.png")));
         this.skinView = new ImageView();
         this.skinView.setImage(this.skin);
-        this.skinView.setX(Utils.getBasePillar().getWidth()-this.skin.getWidth()-10);
+        this.skinView.setX(90-this.skin.getWidth());
         this.skinView.setY(Utils.getBasePillar().getY() - this.skin.getHeight());
         Utils.getPane().getChildren().add(skinView);
         this.isDead = false;

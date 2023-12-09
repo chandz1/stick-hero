@@ -30,8 +30,20 @@ public class Pillar extends Rectangle implements Serializable, Movable, Boundabl
             Utils.setBasePillar(this);
         } else {
             Utils.setNextPillar(this);
-            this.bonusZone = new BonusZone((int) (this.getX() + this.getWidth()/2 - 6));
+            this.bonusZone = new BonusZone(this.getX() + this.getWidth()/2 - 6);
             this.cherry = new Cherry();
+        }
+        this.stick = new Stick();
+    }
+
+    public Pillar(boolean initialPillar, double x, double width, double bonusZoneX, double cherryX) {
+        this(x, width);
+        if (initialPillar) {
+            Utils.setBasePillar(this);
+        } else {
+            Utils.setNextPillar(this);
+            this.bonusZone = new BonusZone(bonusZoneX);
+            this.cherry = new Cherry(cherryX);
         }
         this.stick = new Stick();
     }
@@ -79,6 +91,10 @@ public class Pillar extends Rectangle implements Serializable, Movable, Boundabl
 
     public BonusZone getBonusZone() {
         return bonusZone;
+    }
+
+    public Cherry getCherry() {
+        return cherry;
     }
 
     @Override

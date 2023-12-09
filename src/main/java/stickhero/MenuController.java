@@ -56,6 +56,9 @@ public class MenuController implements Initializable {
         SaveManager.getInstance().load();
         Hero hero = new Hero();
         Utils.setHero(hero);
+
+        GameController gameController = new GameController();
+        gameController.controlStick();
     }
 
     public void quit() {
