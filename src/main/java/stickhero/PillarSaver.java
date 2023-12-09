@@ -39,6 +39,6 @@ public class PillarSaver implements Serializable {
 
     // creates a pillar based on the saved values
     public void createPillar(boolean isBase) {
-        new Pillar(isBase, this.x, this.width, this.bonusZoneX, this.cherryX);
+        new Pillar(isBase, this.x, this.width, this.bonusZoneX, this.cherryX, this.prevStickExists);
     }
 }

@@ -3,6 +3,8 @@ package stickhero;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 public final class Utils {
     private static Hero hero;
@@ -86,4 +88,13 @@ public final class Utils {
 
     // looks up the node in the pane and returns it
     public static Node paneLookup(String lookup) { return getPane().lookup(lookup); }
+
+    public static void playCorrect() {
+        MediaPlayer correct = new MediaPlayer(new Media(String.valueOf(Utils.class.getResource("correct.wav"))));
+        correct.setAutoPlay(true);
+    }
+    public static void playLose() {
+        MediaPlayer loss = new MediaPlayer(new Media(String.valueOf(Utils.class.getResource("lose.wav"))));
+        loss.setAutoPlay(true);
+    }
 }

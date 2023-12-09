@@ -292,6 +292,7 @@ public class GameController implements Initializable {
         mainSequence.setOnFinished(event -> {
             // if hero is not dead
             if (!hero.isDead()) {
+                Utils.playCorrect();
                 // score is incremented by one
                 Utils.getScore().incrementCurrentScore(1);
 
@@ -359,6 +360,7 @@ public class GameController implements Initializable {
         });
         // Rotate stick then move hero and then make hero fall out of screen
         fallRotate.play();
+        Utils.playLose();
     }
 
     // unbinds space as input
