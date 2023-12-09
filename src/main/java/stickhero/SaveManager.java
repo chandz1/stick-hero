@@ -1,5 +1,7 @@
 package stickhero;
 
+import javafx.scene.control.Button;
+
 import java.io.*;
 
 public final class SaveManager implements Serializable {
