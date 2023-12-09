@@ -4,16 +4,35 @@ import javafx.scene.layout.Pane;
 
 import java.io.Serializable;
 
-public final class GameState implements Serializable {
+public final class SaveManager implements Serializable {
 
-    private Pane basePane;
-    private Pillar basePillar;
-    public GameState(Pane pane, Pillar pillar) {
-        this.basePane = pane;
-        this.basePillar = pillar;
+    private static SaveManager saveManager = null;
+
+    private Pillar basePillar = null;
+    private Pillar nextPillar = null;
+    private Hero hero = null;
+
+
+    private SaveManager() {
     }
-    public static void save() {
+
+    private void setCurrentState() {
+        basePillar = Utils.getBasePillar();
+        nextPillar = Utils.getNextPillar();
+        hero = Utils.getHero();
     }
-    public static void load() {
+
+    public static SaveManager getInstance() {
+        if (saveManager == null) {
+            saveManager = new SaveManager();
+        }
+        saveManager.setCurrentState();
+        return saveManager;
+    }
+
+    public void save() {
+
+    }
+    public void load() {
     }
 }

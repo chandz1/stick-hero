@@ -26,12 +26,12 @@
                   <Insets right="50.0" top="20.0" />
                </StackPane.margin>
             </Label>
-            <Label fx:id="score" text="0" StackPane.alignment="CENTER">
+            <Label fx:id="score" text="0" StackPane.alignment="TOP_CENTER">
                <font>
                   <Font size="30.0" />
                </font>
                <StackPane.margin>
-                  <Insets bottom="150.0" />
+                  <Insets top="100.0" />
                </StackPane.margin>
             </Label>
             <ImageView StackPane.alignment="TOP_RIGHT">
