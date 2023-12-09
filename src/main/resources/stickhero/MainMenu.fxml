@@ -6,7 +6,8 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(#39BC91,#F7A282);" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="stickhero.MenuController">
+
+<Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(#39BC91,#F7A282);" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="stickhero.MenuController">
    <children>
       <Button fx:id="quitButton" layoutX="150.0" layoutY="450.0" minWidth="300.0" mnemonicParsing="false" onAction="#quit" text="QUIT" textAlignment="CENTER">
          <font>
