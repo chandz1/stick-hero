@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.layout.Pane;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
@@ -75,5 +76,8 @@ public class MenuController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         quitButton.setFocusTraversable(false);
         loadGameButton.setFocusTraversable(false);
+        if (!new File("save.dat").exists()) {
+            loadGameButton.setDisable(true);
+        }
     }
 }
