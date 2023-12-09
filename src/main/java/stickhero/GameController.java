@@ -63,6 +63,7 @@ public class GameController implements Initializable {
         reviveButton.setFocusTraversable(false);
         // hides the gameOverText during initialization
         hideGameOverText();
+        this.controlGame();
     }
     @FXML
     public void saveGame() throws IOException {
@@ -94,10 +95,6 @@ public class GameController implements Initializable {
         // the scores are reset and updated
         Utils.getScore().resetCurrentScore();
         Utils.getScore().updateScore();
-
-        // new controls are created for the user
-        GameController gameController = new GameController();
-        gameController.controlGame();
     }
 
     @FXML
@@ -125,10 +122,6 @@ public class GameController implements Initializable {
         // brings a new pillar to screen
         Pillar pillar1 = new Pillar(false);
         pillar1.bringToScreen().play();
-
-        // gives back control to player
-        GameController gameController = new GameController();
-        gameController.controlGame();
     }
 
     private void hideGameOverText() {
