@@ -7,8 +7,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.geometry.Point2D;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -24,6 +22,7 @@ public class GameController implements Initializable {
     private final BooleanProperty spacePressed = new SimpleBooleanProperty();
     private EventHandler<KeyEvent> spacePressEvent;
     private EventHandler<KeyEvent> spaceReleaseEvent;
+    private AnimationTimer heroMoveTimer;
     private boolean rotating = false;
     private boolean heroMoving = false;
     private boolean transitioning = false;
@@ -31,11 +30,14 @@ public class GameController implements Initializable {
     @FXML
     private Button saveButton;
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        saveButton.setFocusTraversable(false);
+    }
     @FXML
     public void saveGame() throws IOException {
         SaveManager.getInstance().save();
     }
-
 
     public void controlStick() {
 
@@ -121,6 +123,7 @@ public class GameController implements Initializable {
         moveHero.setOnFinished(event -> {
             heroMoving = false;
             System.out.println("Hero Moved");
+            heroMoveTimer.stop();
         });
         sequence.setOnFinished(event -> {
             transitioning = false;
@@ -130,13 +133,13 @@ public class GameController implements Initializable {
     }
 
     private void checkCollisionOnFlip(TranslateTransition moveHero) {
-        Node node = moveHero.getNode();
-        new Thread(() -> {
-            while(moveHero.getStatus() == Animation.Status.RUNNING) {
-                Point2D point2D = new Point2D(node.getTranslateX(), node.getTranslateY());
-                System.out.println(point2D);
+        heroMoveTimer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                System.out.println("hi");
             }
-        });
+        };
+        heroMoveTimer.start();
     }
 
     private void gameOver(Hero hero, Stick stick, Pillar pillar, RotateTransition rotateStick) {
@@ -167,10 +170,5 @@ public class GameController implements Initializable {
         gameOver.setX(300-gameOver.getLayoutBounds().getWidth()/2);
         gameOver.setY(500-gameOver.getLayoutBounds().getHeight()/2);
         Utils.getPane().getChildren().add(gameOver);
-    }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        saveButton.setFocusTraversable(false);
     }
 }
