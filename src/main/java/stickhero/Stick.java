@@ -22,7 +22,7 @@ public class Stick extends Rectangle implements Movable {
         super.setX(97.5);
         super.setY(Utils.getPane().getHeight() - Utils.getBasePillar().getHeight());
         Utils.getPane().getChildren().add(this);
-        this.setOpacity(0);
+        this.setVisible(false);
         this.scaled = false;
         this.rotateAnimator = new RotateTransition(Duration.millis(500), this);
         this.scaleAnimator = new ScaleTransition(Duration.millis(1000), this);
@@ -35,7 +35,9 @@ public class Stick extends Rectangle implements Movable {
             return;
         }
         // scale by screen size - height of pillar
-        this.setOpacity(1);
+        if (!Utils.isInvisibleMode()) {
+            this.setVisible(true);
+        }
         double scaleBy = Utils.getPane().getHeight() - Utils.getBasePillar().getHeight() - 100;
         scaleAnimator.setByY(scaleBy);
         translateAnimator.setByY(-scaleBy/2);

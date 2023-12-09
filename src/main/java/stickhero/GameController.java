@@ -136,6 +136,7 @@ public class GameController implements Initializable {
                     (Utils.getPane().lookup("#restartButton")).setDisable(true);
                 } else {
                     animationRunning = true;
+                    stick.setVisible(true);
                     RotateTransition rotateStick = stick.stopAndRotateStick();
                     if (stick.isWithinBounds(pillar)) {
                         continueGame(hero, pillar, rotateStick);
