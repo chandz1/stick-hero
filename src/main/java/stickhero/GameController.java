@@ -7,6 +7,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.NodeOrientation;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -27,10 +28,8 @@ public class GameController implements Initializable {
     private EventHandler<KeyEvent> spacePressEvent;
     private EventHandler<KeyEvent> spaceReleaseEvent;
     private AnimationTimer heroMoveTimer;
-    private boolean rotating = false;
     private boolean heroFlippable = false;
     private boolean animationRunning = false;
-    private SequentialTransition mainSequence;
 
     @FXML
     private Button saveButton;
@@ -167,13 +166,14 @@ public class GameController implements Initializable {
         TranslateTransition moveHeroVertical = new TranslateTransition(Duration.millis(1), hero.getImageView());
         if (hero.getImageView().getRotate() == 0) {
             rotateHero.setByAngle(180);
+            hero.getImageView().setScaleX(-1);
             moveHeroVertical.setByY(37);
         } else {
             rotateHero.setByAngle(-180);
+            hero.getImageView().setScaleX(1);
             moveHeroVertical.setByY(-37);
         }
-        ParallelTransition flipHero = new ParallelTransition(rotateHero, moveHeroVertical);
-        return flipHero;
+        return new ParallelTransition(rotateHero, moveHeroVertical);
     }
 
     private void getInput() {
@@ -206,9 +206,8 @@ public class GameController implements Initializable {
             });
             bringToScreen.play();
         });
-        mainSequence = new SequentialTransition(rotateStick, moveHero);
+        SequentialTransition mainSequence = new SequentialTransition(rotateStick, moveHero);
         rotateStick.setOnFinished(event -> {
-            rotating = false;
             System.out.println("Stick Rotated");
             heroMoveTimer.start();
         });
@@ -232,9 +231,7 @@ public class GameController implements Initializable {
         // Move hero by stick length plus an arbitrary value
         TranslateTransition moveHero = hero.move(stick.getScaleY() + 30, 700);
         SequentialTransition sequence = new SequentialTransition(rotateStick, moveHero);
-        moveHero.setOnFinished(event -> {
-            fallAndRotateHero(hero, stick, pillar);
-        });
+        moveHero.setOnFinished(event -> fallAndRotateHero(hero, stick, pillar));
         sequence.play();
     }
 

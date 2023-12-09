@@ -8,7 +8,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(#39BC91,#F7A282);" xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="stickhero.MenuController">
+<Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(#39BC91,#F7A282);" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="stickhero.MenuController">
    <children>
       <Button fx:id="quitButton" layoutX="150.0" layoutY="500.0" minWidth="300.0" mnemonicParsing="false" onAction="#quit" text="QUIT" textAlignment="CENTER">
          <font>
