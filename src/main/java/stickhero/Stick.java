@@ -38,7 +38,7 @@ public class Stick extends Rectangle implements Movable {
         if (!Utils.isInvisibleMode()) {
             this.setVisible(true);
         }
-        double scaleBy = Utils.getPane().getHeight() - Utils.getBasePillar().getHeight() - 100;
+        double scaleBy = Utils.getPane().getHeight() - Utils.getBasePillar().getHeight();
         scaleAnimator.setByY(scaleBy);
         translateAnimator.setByY(-scaleBy/2);
         scaleTranslateAnimator.play();

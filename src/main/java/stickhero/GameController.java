@@ -27,6 +27,7 @@ public class GameController implements Initializable {
     private final BooleanProperty spacePressed = new SimpleBooleanProperty();
     private EventHandler<KeyEvent> spacePressEvent;
     private EventHandler<KeyEvent> spaceReleaseEvent;
+    private SequentialTransition mainSequence;
     private AnimationTimer heroMoveTimer;
     private boolean heroFlippable = false;
     private boolean animationRunning = false;
@@ -246,6 +247,9 @@ public class GameController implements Initializable {
     private void continueGame(Hero hero, Pillar pillar, RotateTransition rotateStick) {
         // moves the hero
         TranslateTransition moveHero = hero.move(pillar.getCurrentX() + pillar.getWidth() - 100, 1000);
+        if (rotateStick == null || moveHero == null) {
+            return;
+        }
 
         // changes the base pillar
         ParallelTransition rebasePillar = pillar.reBase();
@@ -269,17 +273,11 @@ public class GameController implements Initializable {
 
 
         // rotation of stick and moving of hero are done in sequence
-        SequentialTransition mainSequence = new SequentialTransition(rotateStick, moveHero);
-        // when the screen is rotated
-        rotateStick.setOnFinished(event -> {
-            // hero moves timer starts
-            heroMoveTimer.start();
-        });
-        // when the hero finishes moving
-        moveHero.setOnFinished(event -> {
-            // hero move timer stops
-            heroMoveTimer.stop();
-        });
+        mainSequence = new SequentialTransition(rotateStick, moveHero);
+        // when the screen is rotated start hero move animation timer
+        rotateStick.setOnFinished(event -> heroMoveTimer.start());
+        // when the hero finishes moving stop hero move animation timer
+        moveHero.setOnFinished(event -> heroMoveTimer.stop());
 
         // when the rotation of stick and moving of hero is completed
         mainSequence.setOnFinished(event -> {
@@ -311,11 +309,14 @@ public class GameController implements Initializable {
         // Move hero by stick length plus an arbitrary value
         TranslateTransition moveHero = hero.move(stick.getScaleY() + 30, 700);
         // the stick is rotated and the hero is moved sequentially
-        SequentialTransition sequence = new SequentialTransition(rotateStick, moveHero);
+        if (rotateStick == null || moveHero == null) {
+            return;
+        }
+        mainSequence = new SequentialTransition(rotateStick, moveHero);
         // on finishing the hero moving animation the fall and rotate hero function is called
         moveHero.setOnFinished(event -> fallAndRotateHero(hero, stick, pillar));
         // the sequence is played
-        sequence.play();
+        mainSequence.play();
     }
 
     private void fallAndRotateHero(Hero hero, Stick stick, Pillar pillar) {
