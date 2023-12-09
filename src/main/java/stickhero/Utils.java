@@ -15,6 +15,16 @@ public final class Utils {
     private static Pillar basePillar;
     private static Pillar nextPillar;
 
+    private static Score score;
+
+    public static void setScore(Score score) {
+        Utils.score = score;
+    }
+
+    public static Score getScore() {
+        return score;
+    }
+
     public static Hero getHero() {
         return hero;
     }

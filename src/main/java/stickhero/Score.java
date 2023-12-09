@@ -1,6 +1,6 @@
 package stickhero;
 
-import javafx.beans.value.ObservableValue;
+import javafx.scene.control.Label;
 
 import java.io.Serializable;
 
@@ -18,6 +18,16 @@ public class Score implements Serializable {
         this.highScore = 0;
         this.currentScore = 0;
         this.totalCherries = 0;
+    }
+
+    public void setScore() {
+        Utils.setScore(this);
+        this.updateScore();
+    }
+
+    public void updateScore() {
+        Label score = (Label) Utils.getPane().lookup("#score");
+        score.setText(String.valueOf(Utils.getScore().getCurrentScore()));
     }
 
     private int totalCherries;

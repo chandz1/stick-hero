@@ -11,7 +11,6 @@ import java.util.Objects;
 public class Hero implements Serializable, Movable {
     private Image skin;
     private ImageView skinView;
-    private Score score;
     private boolean isDead;
 
     public Hero() {
@@ -21,7 +20,6 @@ public class Hero implements Serializable, Movable {
         this.skinView.setX(Utils.getBasePillar().getWidth()-this.skin.getWidth()-10);
         this.skinView.setY(Utils.getBasePillar().getY() - this.skin.getHeight());
         Utils.getPane().getChildren().add(skinView);
-        this.score = new Score();
         this.isDead = false;
     }
 
@@ -40,14 +38,6 @@ public class Hero implements Serializable, Movable {
 
     public ImageView getSkinView() {
         return skinView;
-    }
-
-    public Score getScore() {
-        return score;
-    }
-
-    public void setScore(Score score) {
-        this.score = score;
     }
 
     public boolean isDead() {

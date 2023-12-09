@@ -7,7 +7,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
@@ -59,11 +58,10 @@ public class GameController implements Initializable {
                         continueGame(hero, pillar, rotateStick);
                         if (stick.isWithinBounds(pillar.getBonusZone())) {
                             // Increment code by 2 if within the bonus zone
-                            hero.getScore().incrementCurrentScore(1);
+                            Utils.getScore().incrementCurrentScore(1);
                         }
-                        hero.getScore().incrementCurrentScore(1);
-                        Label score = (Label) Utils.getPane().lookup("#score");
-                        score.setText(String.valueOf(Utils.getHero().getScore().getCurrentScore()));
+                        Utils.getScore().incrementCurrentScore(1);
+                        Utils.getScore().updateScore();
                     } else {
                         gameOver(hero, stick, pillar, rotateStick);
                     }

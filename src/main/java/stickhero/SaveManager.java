@@ -1,11 +1,6 @@
 package stickhero;
 
-import javafx.scene.layout.Pane;
-
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
+import java.io.*;
 
 public final class SaveManager implements Serializable {
 
@@ -13,7 +8,8 @@ public final class SaveManager implements Serializable {
 
     private Pillar basePillar = null;
     private Pillar nextPillar = null;
-    private Hero hero = null;
+    private Score score = null;
+    private int x;
 
 
     private SaveManager() {
@@ -22,7 +18,7 @@ public final class SaveManager implements Serializable {
     private void setCurrentState() {
         basePillar = Utils.getBasePillar();
         nextPillar = Utils.getNextPillar();
-        hero = Utils.getHero();
+        score = Utils.getScore();
     }
 
     public static SaveManager getInstance() {
@@ -34,29 +30,30 @@ public final class SaveManager implements Serializable {
     }
 
     public void save() throws IOException {
-        ObjectOutputStream baseStream = null;
-        ObjectOutputStream nextStream = null;
-        ObjectOutputStream heroStream = null;
+        ObjectOutputStream saveFile = null;
 
         try {
-            baseStream = new ObjectOutputStream(new FileOutputStream("basePillar.txt"));
-            nextStream = new ObjectOutputStream(new FileOutputStream("nextPillar.txt"));
-            heroStream = new ObjectOutputStream(new FileOutputStream("heroPillar.txt"));
-            baseStream.writeObject(basePillar);
-            nextStream.writeObject(nextPillar);
-            heroStream.writeObject(heroStream);
+            saveFile = new ObjectOutputStream(new FileOutputStream("save.dat"));
+            saveFile.writeObject(saveManager);
         } finally {
-            if (baseStream != null) {
-                baseStream.close();
-            }
-            if (nextStream != null) {
-                nextStream.close();
-            }
-            if (heroStream != null) {
-                heroStream.close();
+            if (saveFile != null) {
+                saveFile.close();
             }
         }
     }
-    public void load() throws IOException {
+    public void load() throws IOException, ClassNotFoundException {
+        ObjectInputStream loadFile = null;
+
+        try {
+            loadFile = new ObjectInputStream(new FileInputStream("save.dat"));
+            saveManager = (SaveManager) loadFile.readObject();
+        } finally {
+            if (loadFile != null) {
+                loadFile.close();
+            }
+        }
+        saveManager.basePillar.setPillar(true);
+        saveManager.nextPillar.setPillar(false);
+        saveManager.score.setScore();
     }
 }

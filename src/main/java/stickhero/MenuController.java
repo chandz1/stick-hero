@@ -42,12 +42,20 @@ public class MenuController implements Initializable {
         Pillar pillar1 = new Pillar(false);
         pillar1.bringToScreen().play();
 
+        Score score = new Score();
+        Utils.setScore(score);
+
         GameController gameController = new GameController();
         gameController.controlStick();
     }
 
-    public void loadGame() throws IOException {
+    public void loadGame() throws IOException, ClassNotFoundException {
+        Pane pane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Game.fxml")));
+        root.getChildren().setAll(pane);
+        Utils.setPane(root);
         SaveManager.getInstance().load();
+        Hero hero = new Hero();
+        Utils.setHero(hero);
     }
 
     public void quit() {
