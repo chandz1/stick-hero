@@ -25,19 +25,22 @@ public class Game extends Application implements Serializable {
     @Override
     public void start(Stage stage) throws IOException {
 
-
+        // Loads the Main Menu
         Pane pane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("MainMenu.fxml")));
+        // Makes a window that is 600x1000
         Scene scene = new Scene(pane, 600, 1000);
 
 
-        // Scene scene = new Scene(fxmlLoader.load(), 1920, 1080);
+        // sets window title
         stage.setTitle("Stick Hero");
+        // sets the scene
         stage.setScene(scene);
         Utils.setCurrentScene(scene);
+        // resizing will break the code so we disabled it
         stage.setResizable(false);
         stage.show();
 
+        // sets the current pane
         Utils.setPane(pane);
-
     }
 }

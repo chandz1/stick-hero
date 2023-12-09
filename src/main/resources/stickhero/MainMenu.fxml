@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(#39BC91,#F7A282);" xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="stickhero.MenuController">
+<Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(#39BC91,#F7A282);" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="stickhero.MenuController">
    <children>
-      <Button fx:id="quitButton" layoutX="150.0" layoutY="500.0" minWidth="300.0" mnemonicParsing="false" onAction="#quit" text="QUIT" textAlignment="CENTER">
+      <Button fx:id="quitButton" layoutX="150.0" layoutY="450.0" minWidth="300.0" mnemonicParsing="false" onAction="#quit" text="QUIT" textAlignment="CENTER">
          <font>
             <Font size="40.0" />
          </font></Button>
-      <Button fx:id="loadGameButton" layoutX="150.0" layoutY="375.0" minWidth="300.0" mnemonicParsing="false" onAction="#loadGame" text="LOAD GAME" textAlignment="CENTER">
+      <Button fx:id="loadGameButton" layoutX="150.0" layoutY="350.0" minWidth="300.0" mnemonicParsing="false" onAction="#loadGame" text="LOAD GAME" textAlignment="CENTER">
          <font>
             <Font size="40.0" />
          </font></Button>
@@ -32,5 +30,10 @@
             <Image url="@hero.png" />
          </image>
       </ImageView>
+      <CheckBox fx:id="invisibleCheck" layoutX="208.0" layoutY="580.0" mnemonicParsing="false" text="Invisible Stick">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </CheckBox>
    </children>
 </Pane>

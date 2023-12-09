@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.layout.Pane;
 
 import java.io.IOException;
@@ -26,8 +27,13 @@ public class MenuController implements Initializable {
     @FXML
     private Pane root;
 
+    @FXML
+    private CheckBox invisibleCheck;
+
 
     public void newGame() throws IOException {
+        Utils.setInvisibleMode(invisibleCheck.isSelected());
+
         Pane pane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Game.fxml")));
         root.getChildren().setAll(pane);
         Utils.setPane(root);

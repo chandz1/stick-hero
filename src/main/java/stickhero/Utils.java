@@ -15,8 +15,17 @@ public final class Utils {
     private static Scene currentScene;
     private static Pillar basePillar;
     private static Pillar nextPillar;
+    private static boolean invisibleMode;
 
     private static Score score;
+
+    public static boolean isInvisibleMode() {
+        return invisibleMode;
+    }
+
+    public static void setInvisibleMode(boolean invisibleMode) {
+        Utils.invisibleMode = invisibleMode;
+    }
 
     public static void setScore(Score score) {
         Utils.score = score;
