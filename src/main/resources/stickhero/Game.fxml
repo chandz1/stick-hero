@@ -1,5 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(#39BC91,#F7A282);" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1"/>
+<Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(#39BC91,#F7A282);" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Button layoutX="238.0" layoutY="27.0" mnemonicParsing="false" text="Save Game">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+      <Label layoutX="265.0" layoutY="218.0" text="Label">
+         <font>
+            <Font size="30.0" />
+         </font></Label>
+      <Label layoutX="516.0" layoutY="14.0" text="Label">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Label>
+   </children>
+</Pane>
