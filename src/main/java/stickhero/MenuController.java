@@ -43,7 +43,8 @@ public class MenuController {
         gameController.controlStick();
     }
 
-    public void loadGame() {
+    public void loadGame() throws IOException {
+        SaveManager.getInstance().load();
     }
 
     public void quit() {

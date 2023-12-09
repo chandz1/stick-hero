@@ -15,6 +15,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -31,7 +32,8 @@ public class GameController implements Initializable {
     private Button saveButton;
 
     @FXML
-    public void saveGame() {
+    public void saveGame() throws IOException {
+        SaveManager.getInstance().save();
     }
 
 
