@@ -254,7 +254,7 @@ public class GameController implements Initializable {
         fallRotate.setOnFinished(event -> {
             animationRunning = false;
             unbindSpace();
-            showGameOverText();
+            showGameOverText(true);
             (Utils.getPane().lookup("#restartButton")).setDisable(false);
         });
         // Rotate stick then move hero and then make hero fall out of screen
@@ -266,22 +266,34 @@ public class GameController implements Initializable {
         Utils.getCurrentScene().removeEventHandler(KeyEvent.KEY_RELEASED, spaceReleaseEvent);
     }
 
-    private void showGameOverText() {
+    private void showGameOverText(boolean isShow) {
         Button reviveButton = (Button) Utils.paneLookup("#reviveButton");
         Label gameOverText = (Label) Utils.paneLookup("#gameOverText");
         Label cherryToRevive = (Label) Utils.paneLookup("#cherryToRevive");
         ImageView cherryReviveImage = (ImageView) Utils.paneLookup("#cherryReviveImage");
         Label highScoreText = (Label) Utils.paneLookup("#highScoreText");
         Label highScore = (Label) Utils.paneLookup("#highScore");
-        if (Utils.getScore().getTotalCherries() >= Utils.getScore().getReviveCherries()) {
-            reviveButton.setDisable(false);
+
+        if (isShow) {
+            if (Utils.getScore().getTotalCherries() >= Utils.getScore().getReviveCherries()) {
+                reviveButton.setDisable(false);
+            }
+            reviveButton.setOpacity(1);
+            gameOverText.setOpacity(1);
+            cherryToRevive.setOpacity(1);
+            cherryReviveImage.setOpacity(1);
+            highScoreText.setOpacity(1);
+            highScore.setOpacity(1);
+        }  else {
+            reviveButton.setDisable(true);
+            reviveButton.setOpacity(0);
+            gameOverText.setOpacity(0);
+            cherryToRevive.setOpacity(0);
+            cherryReviveImage.setOpacity(0);
+            highScoreText.setOpacity(0);
+            highScore.setOpacity(0);
         }
-        reviveButton.setOpacity(1);
-        gameOverText.setOpacity(1);
-        cherryToRevive.setOpacity(1);
-        cherryReviveImage.setOpacity(1);
-        highScoreText.setOpacity(1);
-        highScore.setOpacity(1);
+
     }
 
     public void initHeroMoveTimer() {
