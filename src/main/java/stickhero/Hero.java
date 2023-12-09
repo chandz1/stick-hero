@@ -13,8 +13,11 @@ public class Hero implements Movable {
     private final ImageView imageView;
     private boolean isDead;
 
+    // Hero Constructor
     public Hero() {
+        // loads the hero image
         this.image = new Image(Objects.requireNonNull(Game.class.getResourceAsStream("hero.png")));
+        // creates a node for the hero
         this.imageView = new ImageView();
         this.imageView.setImage(this.image);
         this.imageView.setX(90-this.image.getWidth());
