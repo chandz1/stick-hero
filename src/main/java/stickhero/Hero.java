@@ -32,6 +32,12 @@ public class Hero implements Serializable, Movable {
         return translateTransition;
     }
 
+    public TranslateTransition move(double x, double duration) {
+        TranslateTransition translateTransition = new TranslateTransition(Duration.millis(duration),skinView);
+        translateTransition.setByX(x);
+        return translateTransition;
+    }
+
     public ImageView getSkinView() {
         return skinView;
     }
