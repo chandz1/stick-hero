@@ -203,8 +203,6 @@ public class GameController implements Initializable {
                 animationRunning = false;
                 (Utils.getPane().lookup("#saveButton")).setDisable(false);
                 (Utils.getPane().lookup("#restartButton")).setDisable(false);
-                Utils.getScore().incrementTotalCherries();
-                Utils.getScore().updateScore();
             });
             bringToScreen.play();
         });
@@ -221,6 +219,9 @@ public class GameController implements Initializable {
             System.out.println("Transition Complete");
             if (!hero.isDead()) {
                 Utils.getScore().incrementCurrentScore(1);
+                if (pillar.getCherry().isPickedUp()) {
+                    Utils.getScore().incrementTotalCherries();
+                }
                 Utils.getScore().updateScore();
                 rebasePillar.play();
             } else {
