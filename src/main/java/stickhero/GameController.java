@@ -7,7 +7,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.NodeOrientation;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -33,7 +33,7 @@ public class GameController implements Initializable {
     private boolean animationRunning = false;
 
     @FXML
-    private Button saveButton;
+    private Button goBackButton;
 
     @FXML
     private Button restartButton;
@@ -59,7 +59,7 @@ public class GameController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // removes focus from buttons during initialization
-        saveButton.setFocusTraversable(false);
+        goBackButton.setFocusTraversable(false);
         restartButton.setFocusTraversable(false);
         reviveButton.setFocusTraversable(false);
         // hides the gameOverText during initialization
@@ -67,9 +67,13 @@ public class GameController implements Initializable {
         this.controlGame();
     }
     @FXML
-    public void saveGame() throws IOException {
+    public void goBack() throws IOException {
         // saves the game
         SaveManager.getInstance().save();
+        // creates a main menu fxml
+        Pane pane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("MainMenu.fxml")));
+        // removes everything from the pane and sets all the children as the pane from the fxml
+        Utils.getPane().getChildren().setAll(pane);
     }
 
     @FXML
@@ -156,7 +160,7 @@ public class GameController implements Initializable {
                     // the stick is scaled while space is being pressed
                     stick.scaleStick();
                     // save button and restart button are disabled
-                    (Utils.getPane().lookup("#saveButton")).setDisable(true);
+                    (Utils.getPane().lookup("#goBackButton")).setDisable(true);
                     (Utils.getPane().lookup("#restartButton")).setDisable(true);
                 } else {
                     // animationRunning is set to true as the animation is running
@@ -263,8 +267,15 @@ public class GameController implements Initializable {
                 // animation running is set to false
                 animationRunning = false;
                 // save button and restart button are enabled
-                (Utils.getPane().lookup("#saveButton")).setDisable(false);
+                (Utils.getPane().lookup("#goBackButton")).setDisable(false);
                 (Utils.getPane().lookup("#restartButton")).setDisable(false);
+                // tries the IOException
+                try {
+                    // auto saves the game
+                    SaveManager.getInstance().save();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             });
 
             // bring to screen animation is played
@@ -306,6 +317,8 @@ public class GameController implements Initializable {
     }
 
     private void gameOver(Hero hero, Stick stick, Pillar pillar, RotateTransition rotateStick) {
+        // set hero dead
+        hero.setDead(true);
         // Move hero by stick length plus an arbitrary value
         TranslateTransition moveHero = hero.move(stick.getScaleY() + 30, 700);
         // the stick is rotated and the hero is moved sequentially
@@ -332,6 +345,13 @@ public class GameController implements Initializable {
         ParallelTransition fallRotate = new ParallelTransition(rotate, fall);
         // on finishing the fall
         fallRotate.setOnFinished(event -> {
+            // tries IO Exception
+            try {
+                // auto saves after death
+                SaveManager.getInstance().save();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             // animation running is set to false
             animationRunning = false;
             // space is unbound
@@ -399,7 +419,7 @@ public class GameController implements Initializable {
                     heroFlippable = false;
                     // if hero is rotated
                     if (hero.getImageView().getRotate() == 180) {
-                        // hero dies
+                        // hero is dead
                         hero.setDead(true);
                         // animation for dying
                         fallAndRotateHero(hero, stick, basePillar);

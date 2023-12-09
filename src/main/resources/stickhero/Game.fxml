@@ -10,7 +10,7 @@
    <children>
       <StackPane prefHeight="1000.0" prefWidth="600.0">
          <children>
-            <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveGame" text="Save Game" StackPane.alignment="TOP_CENTER">
+            <Button fx:id="goBackButton" mnemonicParsing="false" onAction="#goBack" text="Main Menu" StackPane.alignment="TOP_CENTER">
                <font>
                   <Font size="20.0" />
                </font>

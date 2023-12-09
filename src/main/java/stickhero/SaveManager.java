@@ -20,11 +20,19 @@ public final class SaveManager implements Serializable {
 
     // sets the current state of the game
     private void setCurrentState() {
-        // pillar savers are created for the base pillar and next pillar
-        basePillar = new PillarSaver(Utils.getBasePillar());
-        nextPillar = new PillarSaver(Utils.getNextPillar());
         // score assigned
         score = Utils.getScore();
+        // if hero is not dead
+        if (!Utils.getHero().isDead()) {
+            // pillar savers are created for the base pillar and next pillar
+            basePillar = new PillarSaver(Utils.getBasePillar());
+            nextPillar = new PillarSaver(Utils.getNextPillar());
+        } else {
+            // pillars are set to null
+            this.basePillar = null;
+            this.nextPillar = null;
+            score.resetCurrentScore();
+        }
     }
 
 
@@ -57,10 +65,24 @@ public final class SaveManager implements Serializable {
             // reads the save manager in the save.dat file
             saveManager = (SaveManager) loadFile.readObject();
         }
-        // creates the base pillar
-        saveManager.basePillar.createPillar(true);
-        // creates the next pillar
-        saveManager.nextPillar.createPillar(false);
+        // base pillar is not null
+        if (saveManager.basePillar != null) {
+            // creates the base pillar
+            saveManager.basePillar.createPillar(true);
+        } else {
+            new Pillar(true);
+        }
+
+        // creates a hero
+        Hero hero = new Hero();
+        Utils.setHero(hero);
+
+        if (saveManager.nextPillar != null) {
+            // creates the next pillar
+            saveManager.nextPillar.createPillar(false);
+        } else {
+            new Pillar(false).bringToScreen().play();
+        }
         // sets the score
         saveManager.score.setScore();
     }

@@ -65,6 +65,7 @@ public class MenuController implements Initializable {
     public void continueGame() throws IOException, ClassNotFoundException {
         // loads a new fxml
         Pane pane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Game.fxml")));
+
         // removes everything from the pane and sets all the children as the pane from the fxml
         root.getChildren().setAll(pane);
         // sets the root as current pane
@@ -72,10 +73,6 @@ public class MenuController implements Initializable {
 
         // loads the save
         SaveManager.getInstance().load();
-
-        // creates a hero
-        Hero hero = new Hero();
-        Utils.setHero(hero);
 
         // the score is updated
         Utils.getScore().updateScore();
