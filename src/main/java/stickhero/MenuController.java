@@ -1,8 +1,5 @@
 package stickhero;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.beans.property.StringPropertyBase;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -46,7 +43,7 @@ public class MenuController implements Initializable {
         Utils.setScore(score);
 
         GameController gameController = new GameController();
-        gameController.controlStick();
+        gameController.controlGame();
     }
 
     public void loadGame() throws IOException, ClassNotFoundException {

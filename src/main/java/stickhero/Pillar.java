@@ -132,8 +132,9 @@ public class Pillar extends Rectangle implements Serializable, Movable, Boundabl
         Random rand = new Random();
 
         // width of the pane subtracted by width of the pillar and the amount of size of basePillar and padding of 64 between pillar and screen
-        double randomize = Utils.getPane().getWidth() - this.getWidth() - 228;
-        double translate = rand.nextDouble(randomize) + this.getWidth() + 64;
+        double heroSize = Utils.getHero().getSkinView().getImage().getWidth();
+        double randomize = Utils.getPane().getWidth() - this.getWidth() - (heroSize * 6) - 100;
+        double translate = rand.nextDouble(randomize) + this.getWidth() + heroSize;
 
         if (cherry == null) {
             return this.moveWithBonus(-translate);

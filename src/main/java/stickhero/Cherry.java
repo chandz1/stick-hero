@@ -42,7 +42,7 @@ public class Cherry implements Serializable, Movable {
 
     @Override
     public TranslateTransition move(double x) {
-        TranslateTransition translateTransition = new TranslateTransition(Duration.millis(300),this.imageView);
+        TranslateTransition translateTransition = new TranslateTransition(Duration.millis(300), this.imageView);
         translateTransition.setByX(x);
         return translateTransition;
     }

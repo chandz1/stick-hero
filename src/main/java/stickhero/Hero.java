@@ -3,6 +3,7 @@ package stickhero;
 import javafx.animation.TranslateTransition;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
 import java.io.Serializable;
@@ -34,6 +35,20 @@ public class Hero implements Serializable, Movable {
         TranslateTransition translateTransition = new TranslateTransition(Duration.millis(duration),skinView);
         translateTransition.setByX(x);
         return translateTransition;
+    }
+
+    public double getCurrentX() {
+        return this.skinView.getX() + this.skinView.getTranslateX();
+    }
+
+    public boolean isBetweenPillars(Pillar pillar, Pillar pillar2) {
+        double basePillarBound = pillar.getCurrentX() + pillar.getWidth();
+        double nextPillarBound = pillar2.getCurrentX();
+        return basePillarBound < this.getCurrentX() && this.getCurrentX() + this.skin.getWidth() - 10 < nextPillarBound;
+    }
+
+    public boolean pickedUpCherry(Cherry cherry) {
+        return false;
     }
 
     public ImageView getSkinView() {

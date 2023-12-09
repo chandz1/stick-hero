@@ -13,7 +13,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -28,8 +27,9 @@ public class GameController implements Initializable {
     private EventHandler<KeyEvent> spaceReleaseEvent;
     private AnimationTimer heroMoveTimer;
     private boolean rotating = false;
-    private boolean heroMoving = false;
-    private boolean transitioning = false;
+    private boolean heroFlippable = false;
+    private boolean animationRunning = false;
+    private SequentialTransition mainSequence;
 
     @FXML
     private Button saveButton;
@@ -89,7 +89,7 @@ public class GameController implements Initializable {
         Utils.setScore(score);
 
         GameController gameController = new GameController();
-        gameController.controlStick();
+        gameController.controlGame();
     }
 
     @FXML
@@ -106,24 +106,25 @@ public class GameController implements Initializable {
         pillar1.bringToScreen().play();
 
         GameController gameController = new GameController();
-        gameController.controlStick();
+        gameController.controlGame();
     }
 
-    public void controlStick() {
+    public void controlGame() {
 
         getInput();
+        initHeroMoveTimer();
 
         spacePressed.addListener(((observable, prevBool, currBool) -> {
             Stick stick = Utils.getBasePillar().getStick();
             Hero hero = Utils.getHero();
             Pillar pillar = Utils.getNextPillar();
             // If transition is not ongoing
-            if (!transitioning) {
+            if (!animationRunning) {
                 if (currBool) {
                     stick.scaleStick();
+                    (Utils.getPane().lookup("#saveButton")).setDisable(true);
                 } else {
-                    System.out.println("entered");
-                    transitioning = true;
+                    animationRunning = true;
                     RotateTransition rotateStick = stick.stopAndRotateStick();
                     if (stick.isWithinBounds(pillar)) {
                         continueGame(hero, pillar, rotateStick);
@@ -139,19 +140,16 @@ public class GameController implements Initializable {
                 }
             // If transition is in progress
             } else {
-                System.out.printf("%s %s\n", heroMoving, currBool);
-                if (heroMoving && currBool) {
-                    System.out.println("Rotated Hero");
+                if (heroFlippable && currBool) {
                     RotateTransition rotateHero = new RotateTransition(Duration.millis(1), hero.getSkinView());
                     TranslateTransition moveHeroVertical = new TranslateTransition(Duration.millis(1), hero.getSkinView());
                     if (hero.getSkinView().getRotate() == 0) {
                         rotateHero.setByAngle(180);
-                        moveHeroVertical.setByY(69);
+                        moveHeroVertical.setByY(37);
                     } else {
                         rotateHero.setByAngle(-180);
-                        moveHeroVertical.setByY(-69);
+                        moveHeroVertical.setByY(-37);
                     }
-                    System.out.println(hero.getSkinView().getRotate());
                     ParallelTransition flipHero = new ParallelTransition(rotateHero, moveHeroVertical);
                     flipHero.play();
                 }
@@ -179,59 +177,65 @@ public class GameController implements Initializable {
 
     private void continueGame(Hero hero, Pillar pillar, RotateTransition rotateStick) {
 
-        TranslateTransition moveHero = hero.move(pillar.getCurrentX() + pillar.getWidth() - 100, 700);
-        checkCollisionOnFlip(moveHero);
+        TranslateTransition moveHero = hero.move(pillar.getCurrentX() + pillar.getWidth() - 100, 1000);
         ParallelTransition rebasePillar = pillar.reBase();
-        ParallelTransition newPillarToScreen  = new Pillar(false).bringToScreen();
-        SequentialTransition sequence = new SequentialTransition(rotateStick, moveHero, rebasePillar, newPillarToScreen);
+        rebasePillar.setOnFinished(event -> {
+            ParallelTransition bringToScreen = new Pillar(false).bringToScreen();
+            bringToScreen.setOnFinished(event1 -> {
+                animationRunning = false;
+                (Utils.getPane().lookup("#saveButton")).setDisable(false);
+            });
+            bringToScreen.play();
+        });
+        mainSequence = new SequentialTransition(rotateStick, moveHero, rebasePillar);
         rotateStick.setOnFinished(event -> {
             rotating = false;
-            heroMoving = true;
             System.out.println("Stick Rotated");
+            heroMoveTimer.start();
         });
         moveHero.setOnFinished(event -> {
-            heroMoving = false;
             System.out.println("Hero Moved");
             heroMoveTimer.stop();
         });
-        sequence.setOnFinished(event -> {
-            transitioning = false;
+        mainSequence.setOnFinished(event -> {
             System.out.println("Transition Complete");
         });
-        sequence.play();
-    }
-
-    private void checkCollisionOnFlip(TranslateTransition moveHero) {
-        heroMoveTimer = new AnimationTimer() {
-            @Override
-            public void handle(long now) {
-                System.out.println("hi");
-            }
-        };
-        heroMoveTimer.start();
+        mainSequence.play();
     }
 
     private void gameOver(Hero hero, Stick stick, Pillar pillar, RotateTransition rotateStick) {
         // Move hero by stick length plus an arbitrary value
         TranslateTransition moveHero = hero.move(stick.getScaleY() + 30, 700);
+        SequentialTransition sequence = new SequentialTransition(rotateStick, moveHero);
+        moveHero.setOnFinished(event -> {
+            fallAndRotateHero(hero, stick, pillar);
+        });
+        sequence.play();
+    }
+
+    private void fallAndRotateHero(Hero hero, Stick stick, Pillar pillar) {
         // Rotate stick by 90 degrees if stick not within bounds of pillar.
         RotateTransition rotate = new RotateTransition(Duration.millis(200), stick);
         // Set rotation angle to 90 degrees
         rotate.setByAngle(90);
         // Transition to make hero fall out of screen
         TranslateTransition fall = new TranslateTransition(Duration.millis(200), hero.getSkinView());
-        // Make hero fall be pillar height plus hero height
-        fall.setByY(pillar.getHeight() + 64);
+        // Make hero fall be pillar height plus extra 100 pixels
+        fall.setByY(pillar.getHeight() + 100);
         // Rotate and make hero fall in parallel
         ParallelTransition fallRotate = new ParallelTransition(rotate, fall);
+        fallRotate.setOnFinished(event -> {
+            animationRunning = false;
+            unbindSpace();
+            showGameOverText();
+        });
         // Rotate stick then move hero and then make hero fall out of screen
-        SequentialTransition sequence = new SequentialTransition(rotateStick, moveHero, fallRotate);
-        // Play the transition
-        sequence.play();
+        fallRotate.play();
+    }
+
+    private void unbindSpace() {
         Utils.getCurrentScene().removeEventHandler(KeyEvent.KEY_PRESSED, spacePressEvent);
         Utils.getCurrentScene().removeEventHandler(KeyEvent.KEY_RELEASED, spaceReleaseEvent);
-        // Run game over function
-        showGameOverText();
     }
 
     private void showGameOverText() {
@@ -250,5 +254,26 @@ public class GameController implements Initializable {
         cherryReviveImage.setOpacity(1);
         highScoreText.setOpacity(1);
         highScore.setOpacity(1);
+    }
+
+    public void initHeroMoveTimer() {
+        heroMoveTimer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                Hero hero = Utils.getHero();
+                Pillar basePillar = Utils.getBasePillar();
+                Pillar nextPillar = Utils.getNextPillar();
+                Stick stick = nextPillar.getStick();
+                if (hero.isBetweenPillars(basePillar, nextPillar)) {
+                    heroFlippable = true;
+                } else {
+                    heroFlippable = false;
+                    if (hero.getSkinView().getRotate() == 180) {
+                        fallAndRotateHero(hero, stick, basePillar);
+                        mainSequence.stop();
+                    }
+                }
+            }
+        };
     }
 }
