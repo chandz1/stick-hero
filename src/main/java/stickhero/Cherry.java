@@ -9,9 +9,9 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.Random;
 
-public class Cherry implements Serializable, Movable {
-    private transient Image image;
-    private transient ImageView imageView;
+public class Cherry implements Movable {
+    private final Image image;
+    private final ImageView imageView;
 
     public Cherry() {
         this.image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("cherry.png")));
@@ -27,15 +27,6 @@ public class Cherry implements Serializable, Movable {
         this.imageView = new ImageView();
         this.imageView.setImage(this.image);
         this.imageView.setX(x);
-        this.imageView.setY(Utils.getBasePillar().getY());
-        Utils.getPane().getChildren().add(this.imageView);
-    }
-
-    public void setCherry() {
-        this.image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("cherry.png")));
-        this.imageView = new ImageView();
-        this.imageView.setImage(this.image);
-        this.imageView.setX(600);
         this.imageView.setY(Utils.getBasePillar().getY());
         Utils.getPane().getChildren().add(this.imageView);
     }

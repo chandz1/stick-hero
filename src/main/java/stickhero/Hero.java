@@ -9,9 +9,9 @@ import javafx.util.Duration;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class Hero implements Serializable, Movable {
-    private Image skin;
-    private ImageView skinView;
+public class Hero implements Movable {
+    private final Image skin;
+    private final ImageView skinView;
     private boolean isDead;
 
     public Hero() {

@@ -8,29 +8,17 @@ import javafx.util.Duration;
 
 import java.io.Serializable;
 
-public class Stick extends Rectangle implements Serializable, Movable {
-    private transient RotateTransition rotateAnimator;
-    private transient ScaleTransition scaleAnimator;
-    private transient TranslateTransition translateAnimator;
-    private transient ParallelTransition scaleTranslateAnimator;
+public class Stick extends Rectangle implements Movable {
+    private final RotateTransition rotateAnimator;
+    private final ScaleTransition scaleAnimator;
+    private final TranslateTransition translateAnimator;
+    private final ParallelTransition scaleTranslateAnimator;
     private boolean scaled;
 
 
 
     public Stick() {
         super(5, 1, new Color(0, 0, 0, 1));
-        super.setX(97.5);
-        super.setY(Utils.getPane().getHeight() - Utils.getBasePillar().getHeight());
-        Utils.getPane().getChildren().add(this);
-        this.setOpacity(0);
-        this.scaled = false;
-        this.rotateAnimator = new RotateTransition(Duration.millis(500), this);
-        this.scaleAnimator = new ScaleTransition(Duration.millis(1000), this);
-        this.translateAnimator = new TranslateTransition(Duration.millis(1000), this);
-        this.scaleTranslateAnimator = new ParallelTransition(scaleAnimator,translateAnimator);
-    }
-
-    public void setStick() {
         super.setX(97.5);
         super.setY(Utils.getPane().getHeight() - Utils.getBasePillar().getHeight());
         Utils.getPane().getChildren().add(this);

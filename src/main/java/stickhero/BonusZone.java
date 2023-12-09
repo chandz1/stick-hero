@@ -8,15 +8,11 @@ import javafx.util.Duration;
 
 import java.io.Serializable;
 
-public class BonusZone extends Rectangle implements Movable, Boundable, Serializable {
+public class BonusZone extends Rectangle implements Movable, Boundable {
     public BonusZone(double x) {
         super(x, 1000-300, 12, 8);
         super.setFill(new Color(1, 0, 0, 1));
 
-        Utils.getPane().getChildren().add(this);
-    }
-
-    public void setBonusZone() {
         Utils.getPane().getChildren().add(this);
     }
 

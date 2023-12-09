@@ -13,7 +13,7 @@ public class Score implements Serializable {
     public Score() {
         this.highScore = 0;
         this.currentScore = 0;
-        this.totalCherries = 100;
+        this.totalCherries = 0;
         this.reviveCherries = 1;
     }
 

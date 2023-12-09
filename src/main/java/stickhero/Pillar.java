@@ -11,7 +11,7 @@ import java.util.Random;
 
 import java.io.Serializable;
 
-public class Pillar extends Rectangle implements Serializable, Movable, Boundable {
+public class Pillar extends Rectangle implements Movable, Boundable {
     // Used arbitrary value for height temporarily will change later
     private Stick stick;
     private Stick prevStick;
@@ -46,18 +46,6 @@ public class Pillar extends Rectangle implements Serializable, Movable, Boundabl
             this.cherry = new Cherry(cherryX);
         }
         this.stick = new Stick();
-    }
-
-    public void setPillar(boolean isBase) {
-        if (isBase) {
-            Utils.setBasePillar(this);
-        } else {
-            Utils.setNextPillar(this);
-        }
-        Utils.getPane().getChildren().add(this);
-        this.bonusZone.setBonusZone();
-        this.cherry.setCherry();
-        this.stick.setStick();
     }
 
     public Stick getPrevStick() {
