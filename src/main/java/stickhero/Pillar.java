@@ -1,9 +1,7 @@
 package stickhero;
 
 import javafx.animation.ParallelTransition;
-import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
@@ -120,7 +118,7 @@ public class Pillar extends Rectangle implements Movable, Boundable {
         Random rand = new Random();
 
         // width of the pane subtracted by width of the pillar and the amount of size of basePillar and padding of 64 between pillar and screen
-        double heroSize = Utils.getHero().getSkinView().getImage().getWidth();
+        double heroSize = Utils.getHero().getImageView().getImage().getWidth();
         double randomize = Utils.getPane().getWidth() - this.getWidth() - (heroSize * 6) - 100;
         double translate = rand.nextDouble(randomize) + this.getWidth() + heroSize;
 

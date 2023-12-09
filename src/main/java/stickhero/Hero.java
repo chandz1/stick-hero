@@ -3,56 +3,70 @@ package stickhero;
 import javafx.animation.TranslateTransition;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
 import java.io.Serializable;
 import java.util.Objects;
 
 public class Hero implements Movable {
-    private final Image skin;
-    private final ImageView skinView;
+    private final Image image;
+    private final ImageView imageView;
     private boolean isDead;
 
     public Hero() {
-        this.skin = new Image(Objects.requireNonNull(Game.class.getResourceAsStream("hero.png")));
-        this.skinView = new ImageView();
-        this.skinView.setImage(this.skin);
-        this.skinView.setX(90-this.skin.getWidth());
-        this.skinView.setY(Utils.getBasePillar().getY() - this.skin.getHeight());
-        Utils.getPane().getChildren().add(skinView);
+        this.image = new Image(Objects.requireNonNull(Game.class.getResourceAsStream("hero.png")));
+        this.imageView = new ImageView();
+        this.imageView.setImage(this.image);
+        this.imageView.setX(90-this.image.getWidth());
+        this.imageView.setY(Utils.getBasePillar().getY() - this.image.getHeight());
+        Utils.getPane().getChildren().add(imageView);
         this.isDead = false;
     }
 
     @Override
     public TranslateTransition move(double x) {
-        TranslateTransition translateTransition = new TranslateTransition(Duration.millis(300),skinView);
+        TranslateTransition translateTransition = new TranslateTransition(Duration.millis(300), imageView);
         translateTransition.setByX(x);
         return translateTransition;
     }
 
     public TranslateTransition move(double x, double duration) {
-        TranslateTransition translateTransition = new TranslateTransition(Duration.millis(duration),skinView);
+        TranslateTransition translateTransition = new TranslateTransition(Duration.millis(duration), imageView);
         translateTransition.setByX(x);
         return translateTransition;
     }
 
     public double getCurrentX() {
-        return this.skinView.getX() + this.skinView.getTranslateX();
+        return this.imageView.getX() + this.imageView.getTranslateX();
     }
 
     public boolean isBetweenPillars(Pillar pillar, Pillar pillar2) {
         double basePillarBound = pillar.getCurrentX() + pillar.getWidth();
         double nextPillarBound = pillar2.getCurrentX();
-        return basePillarBound < this.getCurrentX() && this.getCurrentX() + this.skin.getWidth() - 10 < nextPillarBound;
+        return basePillarBound < this.getCurrentX() && this.getCurrentX() + this.image.getWidth() - 10 < nextPillarBound;
     }
 
-    public boolean pickedUpCherry(Cherry cherry) {
-        return false;
+    public void tryPickUpCherry(Cherry cherry) {
+        if (this.imageView.getRotate() != 180 || cherry.isPickedUp()) {
+            return;
+        }
+        boolean cherryLeftBool = getLeftX() <= cherry.getLeftX() && cherry.getLeftX() <= getRightX();
+        boolean cherryRightBool = getLeftX() <= cherry.getRightX() && cherry.getRightX() <= getRightX();
+        if (cherryLeftBool || cherryRightBool) {
+            cherry.pickedUpTrue();
+        }
     }
 
-    public ImageView getSkinView() {
-        return skinView;
+    public ImageView getImageView() {
+        return imageView;
+    }
+
+    public double getLeftX() {
+        return this.getCurrentX();
+    }
+
+    public double getRightX() {
+        return this.getCurrentX() + this.image.getWidth();
     }
 
     public boolean isDead() {

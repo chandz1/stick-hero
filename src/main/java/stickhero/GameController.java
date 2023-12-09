@@ -14,6 +14,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.net.URL;
@@ -126,6 +127,7 @@ public class GameController implements Initializable {
                 if (currBool) {
                     stick.scaleStick();
                     (Utils.getPane().lookup("#saveButton")).setDisable(true);
+                    (Utils.getPane().lookup("#restartButton")).setDisable(true);
                 } else {
                     animationRunning = true;
                     RotateTransition rotateStick = stick.stopAndRotateStick();
@@ -144,21 +146,27 @@ public class GameController implements Initializable {
             // If transition is in progress
             } else {
                 if (heroFlippable && currBool) {
-                    RotateTransition rotateHero = new RotateTransition(Duration.millis(1), hero.getSkinView());
-                    TranslateTransition moveHeroVertical = new TranslateTransition(Duration.millis(1), hero.getSkinView());
-                    if (hero.getSkinView().getRotate() == 0) {
-                        rotateHero.setByAngle(180);
-                        moveHeroVertical.setByY(37);
-                    } else {
-                        rotateHero.setByAngle(-180);
-                        moveHeroVertical.setByY(-37);
-                    }
-                    ParallelTransition flipHero = new ParallelTransition(rotateHero, moveHeroVertical);
+                    ParallelTransition flipHero = getFlipHeroParallel(hero);
                     flipHero.play();
                 }
             }
         }
         ));
+    }
+
+    @NotNull
+    private static ParallelTransition getFlipHeroParallel(Hero hero) {
+        RotateTransition rotateHero = new RotateTransition(Duration.millis(1), hero.getImageView());
+        TranslateTransition moveHeroVertical = new TranslateTransition(Duration.millis(1), hero.getImageView());
+        if (hero.getImageView().getRotate() == 0) {
+            rotateHero.setByAngle(180);
+            moveHeroVertical.setByY(37);
+        } else {
+            rotateHero.setByAngle(-180);
+            moveHeroVertical.setByY(-37);
+        }
+        ParallelTransition flipHero = new ParallelTransition(rotateHero, moveHeroVertical);
+        return flipHero;
     }
 
     private void getInput() {
@@ -187,6 +195,7 @@ public class GameController implements Initializable {
             bringToScreen.setOnFinished(event1 -> {
                 animationRunning = false;
                 (Utils.getPane().lookup("#saveButton")).setDisable(false);
+                (Utils.getPane().lookup("#restartButton")).setDisable(false);
             });
             bringToScreen.play();
         });
@@ -223,7 +232,7 @@ public class GameController implements Initializable {
         // Set rotation angle to 90 degrees
         rotate.setByAngle(90);
         // Transition to make hero fall out of screen
-        TranslateTransition fall = new TranslateTransition(Duration.millis(200), hero.getSkinView());
+        TranslateTransition fall = new TranslateTransition(Duration.millis(200), hero.getImageView());
         // Make hero fall be pillar height plus extra 100 pixels
         fall.setByY(pillar.getHeight() + 100);
         // Rotate and make hero fall in parallel
@@ -232,6 +241,7 @@ public class GameController implements Initializable {
             animationRunning = false;
             unbindSpace();
             showGameOverText();
+            (Utils.getPane().lookup("#restartButton")).setDisable(false);
         });
         // Rotate stick then move hero and then make hero fall out of screen
         fallRotate.play();
@@ -270,9 +280,10 @@ public class GameController implements Initializable {
                 Stick stick = nextPillar.getStick();
                 if (hero.isBetweenPillars(basePillar, nextPillar)) {
                     heroFlippable = true;
+                    hero.tryPickUpCherry(nextPillar.getCherry());
                 } else {
                     heroFlippable = false;
-                    if (hero.getSkinView().getRotate() == 180) {
+                    if (hero.getImageView().getRotate() == 180) {
                         fallAndRotateHero(hero, stick, basePillar);
                         mainSequence.stop();
                     }

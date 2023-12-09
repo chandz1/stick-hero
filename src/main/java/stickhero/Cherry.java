@@ -7,11 +7,11 @@ import javafx.util.Duration;
 
 import java.io.Serializable;
 import java.util.Objects;
-import java.util.Random;
 
 public class Cherry implements Movable {
     private final Image image;
     private final ImageView imageView;
+    private boolean pickedUp;
 
     public Cherry() {
         this.image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("cherry.png")));
@@ -44,5 +44,27 @@ public class Cherry implements Movable {
 
     public double getCurrentX() {
         return this.imageView.getX() + this.imageView.getTranslateX();
+    }
+
+    public ImageView getImageView() {
+        return imageView;
+    }
+
+    public double getLeftX() {
+        return this.getCurrentX();
+    }
+
+    public double getRightX() {
+        return this.getCurrentX() + this.image.getWidth();
+    }
+
+    public boolean isPickedUp() {
+        return pickedUp;
+    }
+
+    public void pickedUpTrue() {
+        this.pickedUp = true;
+        this.imageView.setOpacity(0);
+        Utils.getScore().incrementTotalCherries();
     }
 }
