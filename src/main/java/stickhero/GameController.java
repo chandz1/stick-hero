@@ -61,13 +61,7 @@ public class GameController implements Initializable {
         saveButton.setFocusTraversable(false);
         restartButton.setFocusTraversable(false);
         reviveButton.setFocusTraversable(false);
-        reviveButton.setDisable(true);
-        reviveButton.setOpacity(0);
-        gameOverText.setOpacity(0);
-        cherryToRevive.setOpacity(0);
-        cherryReviveImage.setOpacity(0);
-        highScoreText.setOpacity(0);
-        highScore.setOpacity(0);
+        hideGameOverText();
     }
     @FXML
     public void saveGame() throws IOException {
@@ -76,13 +70,8 @@ public class GameController implements Initializable {
 
     @FXML
     public void restartGame() throws IOException {
-        reviveButton.setDisable(true);
-        reviveButton.setOpacity(0);
-        gameOverText.setOpacity(0);
-        cherryToRevive.setOpacity(0);
-        cherryReviveImage.setOpacity(0);
-        highScoreText.setOpacity(0);
-        highScore.setOpacity(0);
+        hideGameOverText();
+
         Pane pane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Game.fxml")));
         Utils.getPane().getChildren().setAll(pane);
         Pillar pillar = new Pillar(true);
@@ -102,14 +91,8 @@ public class GameController implements Initializable {
 
     @FXML
     public void reviveGame() throws IOException {
-        reviveButton.setDisable(true);
-        reviveButton.setOpacity(0);
-        gameOverText.setOpacity(0);
-        cherryToRevive.setOpacity(0);
-        cherryReviveImage.setOpacity(0);
-        highScoreText.setOpacity(0);
-        highScore.setOpacity(0);
-        Utils.getScore().setReviveCherries();
+        hideGameOverText();
+        Utils.getScore().updateReviveCherries();
         PillarSaver savedBasePillar = new PillarSaver(Utils.getBasePillar());
         Pane pane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Game.fxml")));
         Utils.getPane().getChildren().setAll(pane);
@@ -125,6 +108,16 @@ public class GameController implements Initializable {
 
         GameController gameController = new GameController();
         gameController.controlGame();
+    }
+
+    private void hideGameOverText() {
+        reviveButton.setDisable(true);
+        reviveButton.setVisible(false);
+        gameOverText.setVisible(false);
+        cherryToRevive.setVisible(false);
+        cherryReviveImage.setVisible(false);
+        highScoreText.setVisible(false);
+        highScore.setVisible(false);
     }
 
     public void controlGame() {
@@ -213,7 +206,7 @@ public class GameController implements Initializable {
             });
             bringToScreen.play();
         });
-        mainSequence = new SequentialTransition(rotateStick, moveHero, rebasePillar);
+        mainSequence = new SequentialTransition(rotateStick, moveHero);
         rotateStick.setOnFinished(event -> {
             rotating = false;
             System.out.println("Stick Rotated");
@@ -226,6 +219,11 @@ public class GameController implements Initializable {
         });
         mainSequence.setOnFinished(event -> {
             System.out.println("Transition Complete");
+            if (!hero.isDead()) {
+                rebasePillar.play();
+            } else {
+                animationRunning = false;
+            }
         });
         mainSequence.play();
     }
@@ -254,8 +252,7 @@ public class GameController implements Initializable {
         fallRotate.setOnFinished(event -> {
             animationRunning = false;
             unbindSpace();
-            showGameOverText(true);
-            (Utils.getPane().lookup("#restartButton")).setDisable(false);
+            showGameOverText();
         });
         // Rotate stick then move hero and then make hero fall out of screen
         fallRotate.play();
@@ -266,34 +263,26 @@ public class GameController implements Initializable {
         Utils.getCurrentScene().removeEventHandler(KeyEvent.KEY_RELEASED, spaceReleaseEvent);
     }
 
-    private void showGameOverText(boolean isShow) {
+    private void showGameOverText() {
         Button reviveButton = (Button) Utils.paneLookup("#reviveButton");
         Label gameOverText = (Label) Utils.paneLookup("#gameOverText");
         Label cherryToRevive = (Label) Utils.paneLookup("#cherryToRevive");
         ImageView cherryReviveImage = (ImageView) Utils.paneLookup("#cherryReviveImage");
         Label highScoreText = (Label) Utils.paneLookup("#highScoreText");
         Label highScore = (Label) Utils.paneLookup("#highScore");
+        Score score = Utils.getScore();
+        Button restartButton = (Button) Utils.getPane().lookup("#restartButton");
 
-        if (isShow) {
-            if (Utils.getScore().getTotalCherries() >= Utils.getScore().getReviveCherries()) {
-                reviveButton.setDisable(false);
-            }
-            reviveButton.setOpacity(1);
-            gameOverText.setOpacity(1);
-            cherryToRevive.setOpacity(1);
-            cherryReviveImage.setOpacity(1);
-            highScoreText.setOpacity(1);
-            highScore.setOpacity(1);
-        }  else {
-            reviveButton.setDisable(true);
-            reviveButton.setOpacity(0);
-            gameOverText.setOpacity(0);
-            cherryToRevive.setOpacity(0);
-            cherryReviveImage.setOpacity(0);
-            highScoreText.setOpacity(0);
-            highScore.setOpacity(0);
+        if (score.getTotalCherries() >= score.getReviveCherries()) {
+            reviveButton.setDisable(false);
         }
-
+        reviveButton.setVisible(true);
+        gameOverText.setVisible(true);
+        cherryToRevive.setVisible(true);
+        cherryReviveImage.setVisible(true);
+        highScoreText.setVisible(true);
+        highScore.setVisible(true);
+        restartButton.setDisable(false);
     }
 
     public void initHeroMoveTimer() {
@@ -310,8 +299,8 @@ public class GameController implements Initializable {
                 } else {
                     heroFlippable = false;
                     if (hero.getImageView().getRotate() == 180) {
+                        hero.setDead(true);
                         fallAndRotateHero(hero, stick, basePillar);
-                        mainSequence.stop();
                     }
                 }
             }

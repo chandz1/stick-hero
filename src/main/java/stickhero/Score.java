@@ -67,7 +67,7 @@ public class Score implements Serializable {
         this.totalCherries++;
     }
 
-    public void setReviveCherries() {
+    public void updateReviveCherries() {
         this.totalCherries -= reviveCherries;
         this.reviveCherries *= 2;
     }
