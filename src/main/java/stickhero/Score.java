@@ -35,6 +35,7 @@ public class Score implements Serializable {
 
     public void resetCurrentScore() {
         this.currentScore = 0;
+        this.reviveCherries = 1;
     }
 
 

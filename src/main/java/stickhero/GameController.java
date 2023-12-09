@@ -76,6 +76,13 @@ public class GameController implements Initializable {
 
     @FXML
     public void restartGame() throws IOException {
+        reviveButton.setDisable(true);
+        reviveButton.setOpacity(0);
+        gameOverText.setOpacity(0);
+        cherryToRevive.setOpacity(0);
+        cherryReviveImage.setOpacity(0);
+        highScoreText.setOpacity(0);
+        highScore.setOpacity(0);
         Pane pane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Game.fxml")));
         Utils.getPane().getChildren().setAll(pane);
         Pillar pillar = new Pillar(true);
@@ -95,6 +102,13 @@ public class GameController implements Initializable {
 
     @FXML
     public void reviveGame() throws IOException {
+        reviveButton.setDisable(true);
+        reviveButton.setOpacity(0);
+        gameOverText.setOpacity(0);
+        cherryToRevive.setOpacity(0);
+        cherryReviveImage.setOpacity(0);
+        highScoreText.setOpacity(0);
+        highScore.setOpacity(0);
         Utils.getScore().setReviveCherries();
         PillarSaver savedBasePillar = new PillarSaver(Utils.getBasePillar());
         Pane pane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Game.fxml")));
@@ -259,7 +273,7 @@ public class GameController implements Initializable {
         ImageView cherryReviveImage = (ImageView) Utils.paneLookup("#cherryReviveImage");
         Label highScoreText = (Label) Utils.paneLookup("#highScoreText");
         Label highScore = (Label) Utils.paneLookup("#highScore");
-        if (Utils.getScore().getTotalCherries() > Utils.getScore().getReviveCherries()) {
+        if (Utils.getScore().getTotalCherries() >= Utils.getScore().getReviveCherries()) {
             reviveButton.setDisable(false);
         }
         reviveButton.setOpacity(1);
