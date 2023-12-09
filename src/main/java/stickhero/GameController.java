@@ -3,12 +3,9 @@ package stickhero;
 import javafx.animation.*;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.event.Event;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
@@ -18,9 +15,10 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
-import java.security.PrivilegedAction;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class GameController {
+public class GameController implements Initializable {
 
     private final BooleanProperty spacePressed = new SimpleBooleanProperty();
     private EventHandler<KeyEvent> spacePressEvent;
@@ -30,17 +28,16 @@ public class GameController {
     private boolean transitioning = false;
 
     @FXML
+    private Button saveButton;
+
+    @FXML
     public void saveGame() {
-        System.out.println("Ha lame");
     }
 
 
     public void controlStick() {
 
         getInput();
-
-        Button saveButton = (Button) Utils.getPane().lookup("#saveButton");
-        saveButton.setFocusTraversable(false);
 
         spacePressed.addListener(((observable, prevBool, currBool) -> {
             Stick stick = Utils.getBasePillar().getStick();
@@ -168,5 +165,10 @@ public class GameController {
         gameOver.setX(300-gameOver.getLayoutBounds().getWidth()/2);
         gameOver.setY(500-gameOver.getLayoutBounds().getHeight()/2);
         Utils.getPane().getChildren().add(gameOver);
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        saveButton.setFocusTraversable(false);
     }
 }
