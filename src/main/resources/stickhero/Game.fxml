@@ -10,6 +10,14 @@
    <children>
       <StackPane prefHeight="1000.0" prefWidth="600.0">
          <children>
+            <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveGame" text="Save Game" StackPane.alignment="TOP_CENTER">
+               <font>
+                  <Font size="20.0" />
+               </font>
+               <StackPane.margin>
+                  <Insets top="20.0" />
+               </StackPane.margin>
+            </Button>
             <Label fx:id="cherryCount" text="0" StackPane.alignment="TOP_RIGHT">
                <font>
                   <Font size="30.0" />

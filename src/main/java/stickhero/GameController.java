@@ -28,10 +28,18 @@ public class GameController {
     private boolean heroMoving = false;
     private boolean transitioning = false;
 
+    @FXML
+    public void saveGame() {
+        System.out.println("Ha lame");
+    }
+
 
     public void controlStick() {
 
         getInput();
+
+        Button saveButton = (Button) Utils.getPane().lookup("#saveButton");
+        saveButton.setFocusTraversable(false);
 
         spacePressed.addListener(((observable, prevBool, currBool) -> {
             Stick stick = Utils.getBasePillar().getStick();
