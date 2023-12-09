@@ -38,8 +38,6 @@ public class Score implements Serializable {
         this.reviveCherries = 1;
     }
 
-
-
     public int getCurrentScore() {
         return currentScore;
     }
