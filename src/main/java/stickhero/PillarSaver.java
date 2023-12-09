@@ -8,7 +8,7 @@ public class PillarSaver implements Serializable {
     private final double width;
     private final double bonusZoneX;
     private final double cherryX;
-    private boolean prevStickExists;
+    private final boolean prevStickExists;
 
     // creates a pillar saver
     public PillarSaver(Pillar pillar) {

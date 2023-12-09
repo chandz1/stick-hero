@@ -1,10 +1,15 @@
 package stickhero;
 
 import javafx.animation.ParallelTransition;
+import javafx.animation.RotateTransition;
+import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.transform.Translate;
 import javafx.util.Duration;
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Random;
 
 import java.io.Serializable;
@@ -66,8 +71,34 @@ public class Pillar extends Rectangle implements Movable, Boundable {
         }
         // stick is created
         this.stick = new Stick();
-        // previous stick is created
-        this.prevStick = new Stick();
+        if (prevStickExists && initialPillar) {
+            // previous stick is created
+            this.prevStick = new Stick();
+            this.prevStick.setVisible(true);
+            this.prevStick.setX(-10);
+            ParallelTransition parallel = stickParallelSpawn();
+            System.out.println("Playing");
+            parallel.play();
+        }
+    }
+
+    @NotNull
+    private ParallelTransition stickParallelSpawn() {
+        ScaleTransition scaleStick = new ScaleTransition(Duration.millis(1), this.prevStick);
+        TranslateTransition translateStick = new TranslateTransition(Duration.millis(1), this.prevStick);
+        RotateTransition rotateStick = new RotateTransition(Duration.millis(1), this.prevStick);
+        double scaleBy = 100;
+        scaleStick.setByY(scaleBy);
+        translateStick.setByY(-scaleBy/2);
+        rotateStick.setByAngle(90);
+        ParallelTransition parallel = new ParallelTransition(scaleStick, translateStick);
+        parallel.setOnFinished(event -> {
+            this.prevStick.getTransforms().add(new Translate(0,-0.5));
+            this.prevStick.setTranslateX(0);
+            this.prevStick.setTranslateY(0);
+            rotateStick.play();
+        });
+        return parallel;
     }
 
     // getter for the previous stick
