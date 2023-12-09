@@ -82,6 +82,5 @@ public class Cherry implements Movable {
     public void pickedUpTrue() {
         this.pickedUp = true;
         this.imageView.setVisible(false);
-        Utils.getScore().incrementTotalCherries();
     }
 }

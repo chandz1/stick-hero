@@ -20,10 +20,7 @@ public class MenuController implements Initializable {
     private Button quitButton;
 
     @FXML
-    private Button newGameButton;
-
-    @FXML
-    private Button loadGameButton;
+    private Button continueButton;
 
     @FXML
     private Pane root;
@@ -55,7 +52,7 @@ public class MenuController implements Initializable {
         gameController.controlGame();
     }
 
-    public void loadGame() throws IOException, ClassNotFoundException {
+    public void continueGame() throws IOException, ClassNotFoundException {
         Pane pane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Game.fxml")));
         root.getChildren().setAll(pane);
         Utils.setPane(root);
@@ -75,9 +72,9 @@ public class MenuController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         quitButton.setFocusTraversable(false);
-        loadGameButton.setFocusTraversable(false);
+        continueButton.setFocusTraversable(false);
         if (!new File("save.dat").exists()) {
-            loadGameButton.setDisable(true);
+            continueButton.setDisable(true);
         }
     }
 }

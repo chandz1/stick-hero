@@ -143,9 +143,8 @@ public class GameController implements Initializable {
                         if (stick.isWithinBounds(pillar.getBonusZone())) {
                             // Increment code by 2 if within the bonus zone
                             Utils.getScore().incrementCurrentScore(1);
+                            Utils.getScore().updateScore();
                         }
-                        Utils.getScore().incrementCurrentScore(1);
-                        Utils.getScore().updateScore();
                     } else {
                         gameOver(hero, stick, pillar, rotateStick);
                     }
@@ -215,11 +214,15 @@ public class GameController implements Initializable {
         moveHero.setOnFinished(event -> {
             System.out.println("Hero Moved");
             heroMoveTimer.stop();
-            Utils.getScore().updateScore();
         });
         mainSequence.setOnFinished(event -> {
             System.out.println("Transition Complete");
             if (!hero.isDead()) {
+                Utils.getScore().incrementCurrentScore(1);
+                if (pillar.getCherry().isPickedUp()) {
+                    Utils.getScore().incrementTotalCherries();
+                }
+                Utils.getScore().updateScore();
                 rebasePillar.play();
             } else {
                 animationRunning = false;
