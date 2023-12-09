@@ -8,6 +8,7 @@ public class PillarSaver implements Serializable {
     private final double width;
     private final double bonusZoneX;
     private final double cherryX;
+    private boolean prevStickExists;
 
     // creates a pillar saver
     public PillarSaver(Pillar pillar) {
@@ -31,6 +32,8 @@ public class PillarSaver implements Serializable {
             // spawns cherry off-screen
             this.cherryX = 600;
         }
+
+        this.prevStickExists = Utils.getBasePillar().getPrevStick() != null;
 
     }
 

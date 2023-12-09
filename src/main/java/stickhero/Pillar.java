@@ -49,7 +49,7 @@ public class Pillar extends Rectangle implements Movable, Boundable {
     }
 
     // constructor for genning a pillar
-    public Pillar(boolean initialPillar, double x, double width, double bonusZoneX, double cherryX) {
+    public Pillar(boolean initialPillar, double x, double width, double bonusZoneX, double cherryX, boolean prevStickExists) {
         // the overloaded constructor is called
         this(x, width);
         // if it is the initial pillar
@@ -66,6 +66,8 @@ public class Pillar extends Rectangle implements Movable, Boundable {
         }
         // stick is created
         this.stick = new Stick();
+        // previous stick is created
+        this.prevStick = new Stick();
     }
 
     // getter for the previous stick
