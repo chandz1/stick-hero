@@ -25,7 +25,7 @@ public class MenuController {
 
 
     public void newGame() throws IOException {
-        Pane pane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Background.fxml")));
+        Pane pane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Game.fxml")));
         root.getChildren().setAll(pane);
         Utils.setPane(root );
         Pillar pillar = new Pillar(true);
