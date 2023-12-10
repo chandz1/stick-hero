@@ -19,6 +19,7 @@ public class GameTest {
         Utils.setPane(pane);
         Utils.setBasePillar(new Pillar(true));
     }
+
     @Test
     public void basePillarWidthTest() {
         Pillar pillar = new Pillar(true);
@@ -44,4 +45,12 @@ public class GameTest {
         Hero hero = new Hero();
         assertTrue(hero.getCurrentX() < 100);
     }
+
+    @Test
+    public void saveManagerSingleton() {
+        SaveManager saveManager = SaveManager.getInstance();
+        SaveManager saveManager2 = SaveManager.getInstance();
+        assertEquals(saveManager, saveManager2);
+    }
+
 }
