@@ -353,6 +353,8 @@ public class GameController implements Initializable {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+            // play game lose audio
+            Utils.playLose();
             // animation running is set to false
             animationRunning = false;
             // space is unbound
@@ -362,7 +364,6 @@ public class GameController implements Initializable {
         });
         // Rotate stick then move hero and then make hero fall out of screen
         fallRotate.play();
-        Utils.playLose();
     }
 
     // unbinds space as input

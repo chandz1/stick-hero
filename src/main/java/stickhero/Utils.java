@@ -94,11 +94,11 @@ public final class Utils {
 
     public static void playCorrect() {
         MediaPlayer correct = new MediaPlayer(new Media(String.valueOf(Utils.class.getResource("correct.wav"))));
-        correct.setAutoPlay(true);
+        correct.play();
     }
     public static void playLose() {
         MediaPlayer loss = new MediaPlayer(new Media(String.valueOf(Utils.class.getResource("lose.wav"))));
-        loss.setAutoPlay(true);
+        loss.play();
     }
     public static void playBGMusic() {
         Media bgMusicMedia = new Media(Objects.requireNonNull(Utils.class.getResource("bgmusic.wav")).toString());
