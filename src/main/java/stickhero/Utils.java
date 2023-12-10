@@ -93,15 +93,15 @@ public final class Utils {
     public static Node paneLookup(String lookup) { return getPane().lookup(lookup); }
 
     public static void playCorrect() {
-        MediaPlayer correct = new MediaPlayer(new Media(String.valueOf(Utils.class.getResource("SoundDesign/correct.wav"))));
+        MediaPlayer correct = new MediaPlayer(new Media(String.valueOf(Utils.class.getResource("correct.wav"))));
         correct.setAutoPlay(true);
     }
     public static void playLose() {
-        MediaPlayer loss = new MediaPlayer(new Media(String.valueOf(Utils.class.getResource("SoundDesign/lose.wav"))));
+        MediaPlayer loss = new MediaPlayer(new Media(String.valueOf(Utils.class.getResource("lose.wav"))));
         loss.setAutoPlay(true);
     }
     public static void playBGMusic() {
-        Media bgMusicMedia = new Media(Objects.requireNonNull(Utils.class.getResource("SoundDesign/bgmusic.wav")).toString());
+        Media bgMusicMedia = new Media(Objects.requireNonNull(Utils.class.getResource("bgmusic.wav")).toString());
         bgMusic = new MediaPlayer(bgMusicMedia);
         bgMusic.setOnEndOfMedia(new Runnable() {
             @Override
