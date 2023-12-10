@@ -11,12 +11,14 @@ import java.util.Objects;
 public class Hero implements Movable {
     private final Image image;
     private final ImageView imageView;
+    private int frameNumber;
     private boolean isDead;
 
     // Hero Constructor
     public Hero() {
         // loads the hero image
-        this.image = new Image(Objects.requireNonNull(Game.class.getResourceAsStream("hero.png")));
+        this.image = new Image(Objects.requireNonNull(Game.class.getResourceAsStream("HeroSprite/frame0000.png")));
+        this.frameNumber = 0;
         // creates a node for the hero
         this.imageView = new ImageView();
         // sets the imageView to the loaded image

@@ -73,6 +73,8 @@ public class GameController implements Initializable {
         Pane pane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("MainMenu.fxml")));
         // removes everything from the pane and sets all the children as the pane from the fxml
         Utils.getPane().getChildren().setAll(pane);
+        // start background music
+        Utils.playBGMusic();
     }
 
     @FXML

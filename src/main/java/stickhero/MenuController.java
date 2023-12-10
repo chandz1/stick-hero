@@ -31,6 +31,9 @@ public class MenuController implements Initializable {
     // the function is called when the new game button is pressed
     @FXML
     public void newGame() throws IOException {
+        // stop music
+        Utils.stopBGMusic();
+
         // invisible mode is set based on its checkbox
         Utils.setInvisibleMode(invisibleCheck.isSelected());
 
@@ -62,6 +65,9 @@ public class MenuController implements Initializable {
     // the function is called when the continue button is pressed
     @FXML
     public void continueGame() throws IOException, ClassNotFoundException {
+        // stop bg music
+        Utils.stopBGMusic();
+
         // loads a new fxml
         Pane pane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Game.fxml")));
 
